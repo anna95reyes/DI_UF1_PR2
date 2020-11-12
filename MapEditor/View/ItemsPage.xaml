@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="MapEditor.View.ItemsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MapEditor.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:MapEditor.View"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Items inventory" 
+                   HorizontalAlignment="Center" FontSize="50"
+                   Margin="0 20 0 10"></TextBlock>
+        <ListView x:Name="lsvItems" SelectionChanged="lsvItems_SelectionChanged"
+                  Grid.Column="0" Grid.Row="1" Background="#f2f2f2">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <view:UICardItem x:Name="uiCardItem" item="{Binding}" Margin="10"></view:UICardItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch"></Setter>
+                </Style>
+                </ListView.ItemContainerStyle>
+        </ListView>
+        <view:UIItemInventory x:Name="itemInventory" Grid.Column="1" Grid.Row="1" Margin="10"/>
+    </Grid>
+</Page>
