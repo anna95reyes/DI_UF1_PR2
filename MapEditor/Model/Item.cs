@@ -10,9 +10,18 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MapEditor.Model
 {
-    public class Item
+    public class Item : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
+        private const int NAME_MINIM = 4;
+        private const int DESC_MINIM = 10;
+        public Item()
+        {
+            Name = "";
+            Desc = "";
+            ImageSource = new BitmapImage();
+        }
 
         private string mName;
 
@@ -25,9 +34,10 @@ namespace MapEditor.Model
             }
         }
 
-        public bool ValidaName(String name)
+        public static bool ValidaName(String name)
         {
-            return name.Trim().Length < 4;
+            if (name.Trim().Length < NAME_MINIM || name==null) return false;
+            return true;
         }
 
         private string mDesc;
@@ -40,9 +50,10 @@ namespace MapEditor.Model
             }
         }
 
-        public bool ValidaDesc(String desc)
+        public static bool ValidaDesc(String desc)
         {
-            return desc.Trim().Length < 10;
+            if (desc.Trim().Length < DESC_MINIM || desc == null) return false;
+            return true;
         }
 
         private BitmapImage mImageSource;
@@ -57,15 +68,6 @@ namespace MapEditor.Model
 
         private static ObservableCollection<Item> _items;
 
-        public Item() { }
-
-        public Item(string name, string desc)
-        {
-            Name = name;
-            Desc = desc;
-            ImageSource = new BitmapImage();
-        }
-
         public static ObservableCollection<Item> getItems()
         {
             
@@ -79,11 +81,5 @@ namespace MapEditor.Model
 
             return _items;
         }
-
-        public static Item getItem(int index)
-        {
-            return _items[index];
-        }
-
     }
 }

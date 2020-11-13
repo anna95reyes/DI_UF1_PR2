@@ -135,9 +135,6 @@
     <Compile Include="View\UICardItem.xaml.cs">
       <DependentUpon>UICardItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UIItemInventory.xaml.cs">
-      <DependentUpon>UIItemInventory.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -180,10 +177,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UICardItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UIItemInventory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

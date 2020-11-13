@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,7 +39,7 @@ namespace MapEditor.View
         public static readonly DependencyProperty itemProperty =
             DependencyProperty.Register("item", typeof(Item), typeof(UICardItem), new PropertyMetadata(new Item()));
 
-
-
     }
+
 }
+

@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
@@ -22,6 +22,7 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Items inventory" 
                    HorizontalAlignment="Center" FontSize="50"
                    Margin="0 20 0 10"></TextBlock>
+
         <ListView x:Name="lsvItems" SelectionChanged="lsvItems_SelectionChanged"
                   Grid.Column="0" Grid.Row="1" Background="#f2f2f2">
             <ListView.ItemTemplate>
@@ -34,8 +35,53 @@
                     <Setter Property="HorizontalContentAlignment"
                             Value="Stretch"></Setter>
                 </Style>
-                </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>
         </ListView>
-        <view:UIItemInventory x:Name="itemInventory" Grid.Column="1" Grid.Row="1" Margin="10"/>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="0.5*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Image:" Grid.Column="0" Grid.Row="0" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top"
+                   Margin=" 15 10 15 0"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="5">
+                <Button x:Name="btnFile" Content="Pick" Margin="5 0 5 0" Click="btnFile_Click"></Button>
+                <TextBox x:Name="txtFilePath" Grid.Column="2" Grid.Row="0" Width="300"
+                     Margin="10 5 5 5" HorizontalAlignment="Left" IsReadOnly="True" IsEnabled="False"></TextBox>
+            </StackPanel>
+
+
+            <TextBlock Text="Name:" Grid.Column="0" Grid.Row="1" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top" 
+                   Margin=" 15 10 15 0"/>
+            <TextBox x:Name="txtName" Text="{Binding ElementName=ucCardItem, Path=item.Name, Mode=OneWay}" 
+                 Grid.Column="1" Grid.Row="1" Margin="5" TextChanged="txtName_TextChanged"/>
+            <TextBlock Text="Description:" Grid.Column="0" Grid.Row="2" 
+                   HorizontalAlignment="Right" VerticalAlignment="Top" 
+                   Margin=" 15 10 15 0"/>
+            <TextBox x:Name="txtDescription" Text="{Binding ElementName=ucCardItem, Path=item.Desc, Mode=OneWay}"
+                 Margin="5" Grid.Column="1" Grid.Row="2" TextChanged="txtDescription_TextChanged"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" Margin="10" HorizontalAlignment="Center">
+                <Button x:Name="btnNew" Content="New +" Click="btnNew_Click"
+                    Margin="10" VerticalAlignment="Top"/>
+                <Button x:Name="btnSave" Content="Save" Click="btnSave_Click"
+                    Margin="10" VerticalAlignment="Top"/>
+                <Button x:Name="btnDelete" Content="Delete -" Click="btnDelete_Click"
+                    Margin="10" VerticalAlignment="Top"/>
+            </StackPanel>
+            <Border x:Name="brdItem" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" VerticalAlignment="Top" Margin="10">
+                <!-- Aqui nomes reservo l'espai per al border, la imatge la creo dinamicament S-->
+            </Border>
+        </Grid>
+
     </Grid>
 </Page>
