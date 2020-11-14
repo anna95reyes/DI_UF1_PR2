@@ -36,13 +36,18 @@ namespace MapEditor.View
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             lsvItems.ItemsSource = Item.getItems();
-            mostrarDadesFormulari(0);
             lsvItems.SelectedIndex = 0;
+            mostrarDadesFormulari(0);
         }
 
         private void lsvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            mostrarDadesFormulari(lsvItems.SelectedIndex);
+            if (lsvItems.SelectedIndex >= 0)
+            {
+                deixarFormulariEnBlanc();
+                mostrarDadesFormulari(lsvItems.SelectedIndex);
+            }
+            
         }
 
         private void crearImatgeAmbBorde(BitmapImage bitmapImage)
@@ -56,6 +61,7 @@ namespace MapEditor.View
             {
                 txtFilePath.Text = bitmapImage.UriSource.LocalPath;
             }
+            
         }
 
         private async void btnFile_Click(object sender, RoutedEventArgs e)
@@ -65,18 +71,23 @@ namespace MapEditor.View
             fp.FileTypeFilter.Add(".png");
 
             StorageFile sf = await fp.PickSingleFileAsync();
-            // Cerca la carpeta de dades de l'aplicació, dins de ApplicationData
-            var folder = ApplicationData.Current.LocalFolder;
-            // Dins de la carpeta de dades, creem una nova carpeta "icons"
-            var iconsFolder = await folder.CreateFolderAsync("icons", CreationCollisionOption.OpenIfExists);
-            // Creem un nom usant la data i hora, de forma que no poguem repetir noms.
-            string name = (DateTime.Now).ToString("yyyyMMddhhmmss") + "_" + sf.Name;
-            // Copiar l'arxiu triat a la carpeta indicada, usant el nom que hem muntat
-            StorageFile copiedFile = await sf.CopyAsync(iconsFolder, name);
-            // Crear una imatge en memòria (BitmapImage) a partir de l'arxiu copiat a ApplicationData
-            BitmapImage tmpBitmap = new BitmapImage(new Uri(copiedFile.Path));
-            // ..... YOUR CODE HERE ...........
-            crearImatgeAmbBorde(tmpBitmap);
+            if (sf != null)
+            {
+                // Cerca la carpeta de dades de l'aplicació, dins de ApplicationData
+                var folder = ApplicationData.Current.LocalFolder;
+                // Dins de la carpeta de dades, creem una nova carpeta "icons"
+                var iconsFolder = await folder.CreateFolderAsync("icons", CreationCollisionOption.OpenIfExists);
+                // Creem un nom usant la data i hora, de forma que no poguem repetir noms.
+                string name = (DateTime.Now).ToString("yyyyMMddhhmmss") + "_" + sf.Name;
+                // Copiar l'arxiu triat a la carpeta indicada, usant el nom que hem muntat
+                StorageFile copiedFile = await sf.CopyAsync(iconsFolder, name);
+                // Crear una imatge en memòria (BitmapImage) a partir de l'arxiu copiat a ApplicationData
+                BitmapImage tmpBitmap = new BitmapImage(new Uri(copiedFile.Path));
+
+                // ..... YOUR CODE HERE ...........
+                crearImatgeAmbBorde(tmpBitmap);
+            }
+            validaDadesFormulari();
         }
 
         private void deixarFormulariEnBlanc()
@@ -108,13 +119,12 @@ namespace MapEditor.View
         {
             if (lsvItems.SelectedIndex >= 0)
             {
+                Image img = (Image)brdItem.Child;
+                BitmapImage bmi = (BitmapImage)img.Source;
                 Item itemSeleccionat = Item.getItems()[lsvItems.SelectedIndex];
                 itemSeleccionat.Name = txtName.Text;
                 itemSeleccionat.Desc = txtDescription.Text;
-                if (txtFilePath.Text != "")
-                {
-                    itemSeleccionat.ImageSource = new BitmapImage(new Uri(txtFilePath.Text));
-                }
+                itemSeleccionat.ImageSource = new BitmapImage(new Uri(bmi.UriSource.ToString()));
             }
         }
 
@@ -127,10 +137,11 @@ namespace MapEditor.View
             }
         }
 
-        private void validaDades()
+        private void validaDadesFormulari()
         {
             bool nomValid = false;
             bool DescValid = false;
+            bool imgValid = false;
             if (!Item.ValidaName(txtName.Text))
             {
                 if (txtName.Text.Length > 0)
@@ -156,17 +167,21 @@ namespace MapEditor.View
                 txtDescription.Background = new SolidColorBrush(Colors.Transparent);
                 DescValid = true;
             }
-            btnSave.IsEnabled = nomValid && DescValid;
+            if (txtFilePath.Text != "")
+            {
+                imgValid = true;
+            }
+            btnSave.IsEnabled = nomValid && DescValid && imgValid;
         }
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            validaDades();
+            validaDadesFormulari();
 
         }
 
         private void txtDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
-            validaDades();
+            validaDadesFormulari();
         }
     }
 }

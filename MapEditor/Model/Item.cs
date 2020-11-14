@@ -29,7 +29,6 @@ namespace MapEditor.Model
         {
             get { return mName; }
             set {
-                //if (!ValidaName(mName)) throw new Exception("Nom incorrecte.");
                 mName = value;
             }
         }
