@@ -111,7 +111,7 @@ namespace MapEditor.View
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            Item.getItems().Add(new Item()); ;
+            Item.getItems().Add(new Item());
             lsvItems.SelectedIndex = Item.getItems().Count - 1;
             deixarFormulariEnBlanc();
         }
@@ -124,7 +124,7 @@ namespace MapEditor.View
                 Item itemSeleccionat = Item.getItems()[lsvItems.SelectedIndex];
                 itemSeleccionat.Name = txtName.Text;
                 itemSeleccionat.Desc = txtDescription.Text;
-                itemSeleccionat.ImageSource = new BitmapImage(new Uri(bmi.UriSource.ToString()));
+                itemSeleccionat.ImageSource = bmi;
             }
         }
 
@@ -148,7 +148,6 @@ namespace MapEditor.View
                 {
                     txtName.Background = new SolidColorBrush(Colors.Red);
                 }
-
             }
             else
             {
