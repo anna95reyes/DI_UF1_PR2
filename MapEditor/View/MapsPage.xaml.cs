@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,10 @@ namespace MapEditor.View
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            lsvItemsMap.ItemsSource = Map.getMap().MapItems;
+            lsvItemsMap.SelectedIndex = 0;
+            imgMap.Source = Map.getMap().ImageSource;
         }
     }
+    
 }

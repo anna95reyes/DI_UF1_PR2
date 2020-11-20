@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,10 @@ namespace MapEditor.Model
     /// seus continguts (els items).
     /// Conté també les dimensions de la cel·la.
     /// </summary>
-    class Map
+    public class Map : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
+
         private static Map _MapSingleton;
         public static Map getMap()
         {

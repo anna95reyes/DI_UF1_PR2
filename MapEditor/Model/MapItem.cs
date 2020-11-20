@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,9 @@ namespace MapEditor.Model
     /// <summary>
     /// Instància d'un Item en un Mapa
     /// </summary>
-    class MapItem
+    public class MapItem : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
         /// <summary>
         /// 

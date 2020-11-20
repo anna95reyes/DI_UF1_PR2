@@ -135,6 +135,9 @@
     <Compile Include="View\UICardItem.xaml.cs">
       <DependentUpon>UICardItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UICardItemMap.xaml.cs">
+      <DependentUpon>UICardItemMap.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -143,6 +146,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\amulet.png" />
+    <Content Include="Assets\icons8-arrow-50.png" />
+    <Content Include="Assets\icons8-arrow-pointing-left-50.png" />
+    <Content Include="Assets\icons8-thick-arrow-pointing-down-50.png" />
+    <Content Include="Assets\icons8-thick-arrow-pointing-up-50.png" />
     <Content Include="Assets\invisible.png" />
     <Content Include="Assets\map_0.jpg" />
     <Content Include="Assets\map_1.png" />
@@ -177,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UICardItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UICardItemMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
