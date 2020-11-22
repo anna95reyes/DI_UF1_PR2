@@ -111,16 +111,21 @@ namespace MapEditor.View
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            Item.getItems().Add(new Item());
-            lsvItems.SelectedIndex = Item.getItems().Count - 1;
             deixarFormulariEnBlanc();
+            lsvItems.SelectedIndex = -1;
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (lsvItems.SelectedIndex >= 0)
+            Image img = (Image)brdItem.Child;
+            BitmapImage bmi = (BitmapImage)img.Source;
+            if (lsvItems.SelectedIndex == -1)
             {
-                Image img = (Image)brdItem.Child;
-                BitmapImage bmi = (BitmapImage)img.Source;
+                Item nou = new Item(txtName.Text, txtDescription.Text, bmi);
+                Item.getItems().Add(nou);
+                lsvItems.SelectedIndex = Item.getItems().Count - 1;
+            }
+            else if (lsvItems.SelectedIndex >= 0)
+            {
                 Item itemSeleccionat = Item.getItems()[lsvItems.SelectedIndex];
                 itemSeleccionat.Name = txtName.Text;
                 itemSeleccionat.Desc = txtDescription.Text;

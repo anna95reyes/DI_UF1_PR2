@@ -14,9 +14,9 @@ namespace MapEditor.Model
     /// seus continguts (els items).
     /// Conté també les dimensions de la cel·la.
     /// </summary>
-    public class Map : INotifyPropertyChanged
+    public class Map //: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
+        //public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
         private static Map _MapSingleton;
         public static Map getMap()

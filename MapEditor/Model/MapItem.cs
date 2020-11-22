@@ -11,9 +11,9 @@ namespace MapEditor.Model
     /// <summary>
     /// Instància d'un Item en un Mapa
     /// </summary>
-    public class MapItem : INotifyPropertyChanged
+    public class MapItem //: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
+        //public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
         /// <summary>
         /// 

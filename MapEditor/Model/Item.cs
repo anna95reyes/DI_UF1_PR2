@@ -10,9 +10,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MapEditor.Model
 {
-    public class Item : INotifyPropertyChanged
+    public class Item //: INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
+        //public event PropertyChangedEventHandler PropertyChanged; //INotifyPropertyChanged
 
         private const int NAME_MINIM = 4;
         private const int DESC_MINIM = 10;
@@ -21,6 +21,13 @@ namespace MapEditor.Model
             Name = "";
             Desc = "";
             ImageSource = new BitmapImage();
+        }
+
+        public Item(string name, string desc, BitmapImage imageSource)
+        {
+            Name = name;
+            Desc = desc;
+            ImageSource = imageSource;
         }
 
         private string mName;
