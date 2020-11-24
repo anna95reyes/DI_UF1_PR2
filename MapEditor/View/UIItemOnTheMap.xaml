@@ -11,6 +11,7 @@
 
     <Canvas>
         <Border x:Name="brdItemSelected">
+            <!-- El Height i el Width seran la mida que l'usuari dona a les celes -->
             <Border x:Name="brdImage" BorderBrush="Red" BorderThickness="2" Height="49" Width="49">
                 <Image x:Name="imgItem" Source="/Assets/medal.png" Stretch="Fill"/>
             </Border>
@@ -25,6 +26,5 @@
             <Image Source="/Assets/invisible.png" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Width="25"/>
         </Grid>
-        
     </Canvas>
 </UserControl>
