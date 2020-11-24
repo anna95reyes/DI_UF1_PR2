@@ -137,9 +137,35 @@ namespace MapEditor.View
         {
             if (lsvItems.SelectedIndex >= 0)
             {
+                Map m = Map.getMap();
+                int mi = m.MapItems.Count;
                 Item itemSeleccionat = Item.getItems()[lsvItems.SelectedIndex];
-                Item.getItems().Remove(itemSeleccionat);
+                Boolean itemEsborrable = false;
+                for (int i = 0; i < mi && !itemEsborrable; i++)
+                {
+                    itemEsborrable = m.MapItems[i].Item.Equals(itemSeleccionat);
+                }
+                if (!itemEsborrable)
+                {
+                    Item.getItems().Remove(itemSeleccionat);
+                }
+                else
+                {
+                    ItemNotDeleteDialog();
+                }
             }
+        }
+
+        private async void ItemNotDeleteDialog()
+        {
+            ContentDialog notDeleteDialog = new ContentDialog
+            {
+                Title = "The item cannot be deleted",
+                Content = "Check that the item is not in the Map list.",
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await notDeleteDialog.ShowAsync();
         }
 
         private void validaDadesFormulari()
