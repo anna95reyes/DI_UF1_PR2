@@ -9,14 +9,14 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Canvas>
-        <Border x:Name="brdItemSelected">
-            <!-- El Height i el Width seran la mida que l'usuari dona a les celes -->
+    <Canvas x:Name="cnvItemMap">
+        <!--<Border x:Name="brdItemSelected">
+            --><!-- El Height i el Width seran la mida que l'usuari dona a les celes --><!--
             <Border x:Name="brdImage" BorderBrush="Red" BorderThickness="2" Height="49" Width="49">
                 <Image x:Name="imgItem" Source="/Assets/medal.png" Stretch="Fill"/>
             </Border>
         </Border>
-        <!-- relatiu al borde de la imatge -->
+        --><!-- relatiu al borde de la imatge --><!--
         <Grid Canvas.Top="-20" Canvas.Left="30">
             <Ellipse Width="30" Height="30" Stroke="Red" StrokeThickness="2" Fill="White"></Ellipse>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">x10</TextBlock>
@@ -25,6 +25,6 @@
             <Ellipse Width="30" Height="30" Stroke="Red" StrokeThickness="2" Fill="White"></Ellipse>
             <Image Source="/Assets/invisible.png" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Width="25"/>
-        </Grid>
+        </Grid>-->
     </Canvas>
 </UserControl>

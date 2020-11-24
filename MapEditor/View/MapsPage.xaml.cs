@@ -36,6 +36,7 @@ namespace MapEditor.View
             lsvItemsMap.ItemsSource = Map.getMap().MapItems;
             lsvItemsMap.SelectedIndex = 0;
             imgMap.Source = Map.getMap().ImageSource;
+            uiItemOnTheMap.mapItem = Map.getMap().MapItems[0];
         }
 
         private async void btnFile_Click(object sender, RoutedEventArgs e)

@@ -125,6 +125,7 @@
                               VerticalScrollBarVisibility="auto" HorizontalScrollBarVisibility="auto">
                     <RelativePanel x:Name="rlpMap">
                         <Image x:Name="imgMap" Stretch="None"/>
+                        <view:UIItemOnTheMap x:Name="uiItemOnTheMap"/>
                     </RelativePanel>
                 </ScrollViewer>
             </Border>
