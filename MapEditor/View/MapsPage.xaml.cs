@@ -46,7 +46,7 @@ namespace MapEditor.View
         private void inicializeApp()
         {
             imgMap.Source = Map.getMap().ImageSource;
-            afegirItemsDinsMapa();
+            colocarItemsDinsMapa();
 
             nudCellWidht.Value = Map.getMap().CellWidth;
             nudCellHeight.Value = Map.getMap().CellHeight;
@@ -57,21 +57,26 @@ namespace MapEditor.View
             cboAmountItemMap.SelectedIndex = 0;
         }
 
-        private void afegirItemsDinsMapa()
+        private void colocarItemsDinsMapa()
         {
             for (int i = 0; i < Map.getMap().MapItems.Count; i++)
             {
-                //<view:UIItemOnTheMap x:Name="uiItemOnTheMap"/>
-                UIItemOnTheMap uiItemOnTheMap = new UIItemOnTheMap();
-                uiItemOnTheMap.mapItem = Map.getMap().MapItems[i];
-
-                //Afegir la UI al Canvas
-                cnvItemOfMap.Children.Add(uiItemOnTheMap);
-                
-                //Colocar l'item al mapa
-                Canvas.SetLeft(uiItemOnTheMap, Map.getMap().CellWidth * Map.getMap().MapItems[i].X);
-                Canvas.SetTop(uiItemOnTheMap, Map.getMap().CellHeight * Map.getMap().MapItems[i].Y);
+                afegirItemsDinsMapa(i);
             }
+        }
+
+        private void afegirItemsDinsMapa(int mapItem)
+        {
+            //<view:UIItemOnTheMap x:Name="uiItemOnTheMap"/>
+            UIItemOnTheMap uiItemOnTheMap = new UIItemOnTheMap();
+            uiItemOnTheMap.mapItem = Map.getMap().MapItems[mapItem];
+
+            //Afegir la UI al Canvas
+            cnvItemOfMap.Children.Add(uiItemOnTheMap);
+
+            //Colocar l'item al mapa
+            Canvas.SetLeft(uiItemOnTheMap, Map.getMap().CellWidth * Map.getMap().MapItems[mapItem].X);
+            Canvas.SetTop(uiItemOnTheMap, Map.getMap().CellHeight * Map.getMap().MapItems[mapItem].Y);
         }
 
         private void mostrarItemsDinsMapa()
@@ -157,6 +162,8 @@ namespace MapEditor.View
             activarBotoNewItem();
         }
 
+
+
         private void btnNewItem_Click(object sender, RoutedEventArgs e)
         {
             /*
@@ -167,8 +174,17 @@ namespace MapEditor.View
                                              itemsAmount[cboAmountItemMap.SelectedIndex], ckbHidden.IsChecked.Value);
             Map.getMap().addItem(nouMapItem);
 
-            afegirItemsDinsMapa();
+            afegirItemsDinsMapa(Map.getMap().MapItems.Count -1);
             //Map pMap, Item pItem, int pX, int pY, int pAmount, bool pIsHidden
+
+            esborrarFormulariNewItem();
+        }
+
+        private void esborrarFormulariNewItem()
+        {
+            cboNewItem.SelectedIndex = -1;
+            cboAmountItemMap.SelectedIndex = 0;
+            ckbHidden.IsChecked = false;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -299,8 +315,6 @@ namespace MapEditor.View
             }
             
         }
-
-        
     }
     
 }
