@@ -56,7 +56,8 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Margin="5">
                 <Button x:Name="btnFile" Content="Pick" Margin="5 0 5 0" Click="btnFile_Click"></Button>
                 <TextBox x:Name="txtFilePath" Grid.Column="2" Grid.Row="0" Width="300"
-                     Margin="10 5 5 5" HorizontalAlignment="Left" IsReadOnly="True" IsEnabled="False"></TextBox>
+                     Margin="10 5 5 5" HorizontalAlignment="Left" IsReadOnly="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto" Background="#CCCCCC"></TextBox>
             </StackPanel>
 
 

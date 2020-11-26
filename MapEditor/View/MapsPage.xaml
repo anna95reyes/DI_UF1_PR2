@@ -24,7 +24,7 @@
                    HorizontalAlignment="Center" FontSize="50"
                    Margin="0 20 0 10"></TextBlock>
         <ListView x:Name="lsvItemsMap"
-                  Grid.Column="0" Grid.Row="1">
+                  Grid.Column="0" Grid.Row="1" SelectionChanged="lsvItemsMap_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <view:UICardItemMap x:Name="uiCardItemMap" mapItem="{Binding}" Margin="10"></view:UICardItemMap>
@@ -66,32 +66,32 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Current Item:"
                                VerticalAlignment="Top" FontSize="18" Margin="5"></TextBlock>
                     <Button x:Name="btnDelete" Grid.Row="1" Grid.Column="0" FontFamily="Segoe MDL2 Assets" 
-                            Content="&#59213;" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="5"></Button>
+                            Content="&#59213;" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                            Margin="0,6,5,5" Width="40" Click="btnDelete_Click"></Button>
                     <Button x:Name="btnLeft"   Grid.Row="1" Grid.Column="2"
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="5">
+                            Margin="5" Click="btnLeft_Click" IsEnabled="False">
                         <Button.Content>
                             <Image Source="/Assets/icons8-arrow-pointing-left-50.png" />
                         </Button.Content>
                     </Button>
                     <Button x:Name="btnUp"     Grid.Row="0" Grid.Column="3" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="5">
+                            Margin="5" Click="btnUp_Click">
                         <Button.Content>
                             <Image Source="/Assets/icons8-thick-arrow-pointing-up-50.png" />
                         </Button.Content>
                     </Button>
                     <Button x:Name="btnDown"   Grid.Row="2" Grid.Column="3"
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="5">
+                            Margin="5" Click="btnDown_Click">
                         <Button.Content>
                             <Image Source="/Assets/icons8-thick-arrow-pointing-down-50.png" />
                         </Button.Content>
                     </Button>
                     <Button x:Name="btnRight"  Grid.Row="1" Grid.Column="4" 
                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Margin="5">
+                            Margin="5" Click="btnRight_Click">
                         <Button.Content>
                             <Image Source="/Assets/icons8-arrow-50.png" />
                         </Button.Content>
@@ -108,14 +108,24 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="New Item:" Margin="10 10 10 0" VerticalAlignment="Bottom"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10 0 10 10">
-                    <ComboBox x:Name="cboNewItem" MinWidth="170" PlaceholderText="&lt;select a item type&gt;"></ComboBox>
-                    <Button x:Name="btnNewItem" FontFamily="Segoe MDL2 Assets" Content="&#59152;"></Button>
+                    <ComboBox x:Name="cboNewItem" MinWidth="170" PlaceholderText="&lt;select a item type&gt;" 
+                              SelectionChanged="cboNewItem_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <!-- No utilitzo la UICardItem perque queda molt gran i no val la pena
+                                     reutilitzar-la en aquest cas -->
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button x:Name="btnNewItem" FontFamily="Segoe MDL2 Assets" Content="&#59152;" IsEnabled="False"
+                            Click="btnNewItem_Click"></Button>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
                     <TextBlock Text="Amount:" VerticalAlignment="Top" Margin="5"/>
-                    <ComboBox x:Name="cboAmountItemMap"></ComboBox>
+                    <ComboBox x:Name="cboAmountItemMap" SelectionChanged="cboAmountItemMap_SelectionChanged"></ComboBox>
                 </StackPanel>
-                <CheckBox x:Name="ckbHidden" Content="Hidden" Grid.Row="3" Margin=" 10"></CheckBox>
+                <CheckBox x:Name="ckbHidden" Content="Hidden" Grid.Row="3" Margin="10"></CheckBox>
 
             </Grid>
 
@@ -125,7 +135,7 @@
                               VerticalScrollBarVisibility="auto" HorizontalScrollBarVisibility="auto">
                     <RelativePanel x:Name="rlpMap">
                         <Image x:Name="imgMap" Stretch="None"/>
-                        <view:UIItemOnTheMap x:Name="uiItemOnTheMap"/>
+                        <Canvas x:Name="cnvItemOfMap"></Canvas>
                     </RelativePanel>
                 </ScrollViewer>
             </Border>
@@ -144,7 +154,8 @@
                 <Button x:Name="btnFile" Content="Pick" Click="btnFile_Click" Grid.Row="1" Grid.Column="0"
                         HorizontalAlignment="Right" Margin="0 10 15 10"></Button>
                 <TextBox x:Name="txtFile" IsReadOnly="True" Grid.Row="1" Grid.Column="1"
-                         Margin="10" MinWidth="130" PlaceholderText="Image"></TextBox>
+                         Margin="10" Width="130" PlaceholderText="Image"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"></TextBox>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="3" Margin="20">
                 <Grid.RowDefinitions>

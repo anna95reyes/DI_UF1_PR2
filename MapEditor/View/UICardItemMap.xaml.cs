@@ -49,15 +49,17 @@ namespace MapEditor.View
 
         private void mapItemChangedCallback(DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage invisible = new BitmapImage(new Uri("ms-appx:///Assets/invisible.png"));
-            Image img = new Image();
-            txbAmount.Text = "X" + mapItem.Amount;
-            txbAmount.FontSize = 20;
-            if (mapItem.IsHidden)
-            {
-                imgHidden.Source = img.Source = invisible;
+            if (mapItem != null) {
+                BitmapImage invisible = new BitmapImage(new Uri("ms-appx:///Assets/invisible.png"));
+                Image img = new Image();
+                txbAmount.Text = "X" + mapItem.Amount;
+                txbAmount.FontSize = 20;
+                if (mapItem.IsHidden)
+                {
+                    imgHidden.Source = img.Source = invisible;
+                }
+                imgHidden.Height = 30;
             }
-            imgHidden.Height = 30;
         }
     }
 }
