@@ -64,7 +64,7 @@ namespace MapEditor.View
                 afegirItemsDinsMapa(i);
             }
         }
-
+        
         private void afegirItemsDinsMapa(int mapItem)
         {
             //<view:UIItemOnTheMap x:Name="uiItemOnTheMap"/>
@@ -73,6 +73,8 @@ namespace MapEditor.View
 
             //Afegir la UI al Canvas
             cnvItemOfMap.Children.Add(uiItemOnTheMap);
+            uiItemOnTheMap.Clicked += new EventHandler(uiItemOnTheMap_Click);
+
 
             //Colocar l'item al mapa
             Canvas.SetLeft(uiItemOnTheMap, Map.getMap().CellWidth * Map.getMap().MapItems[mapItem].X);
@@ -118,16 +120,12 @@ namespace MapEditor.View
                 imgMap.Source = tmpBitmap;
                 Map.getMap().ImageSource = tmpBitmap;
                 txtFile.Text = tmpBitmap.UriSource.LocalPath;
-                //recolocarItemsMap();
-
-
+                
             }
         }
 
         private void recolocarItemsMap()
         {
-            Debug.WriteLine(Map.getMap().ImageSource.PixelWidth);
-            Debug.WriteLine(Map.getMap().CellWidth);
             int maxX = Convert.ToInt32(Map.getMap().ImageSource.PixelWidth / Map.getMap().CellWidth);
             int maxY = Convert.ToInt32(Map.getMap().ImageSource.PixelHeight / Map.getMap().CellHeight);
             for (int i = 0; i < Map.getMap().MapItems.Count; i++)
@@ -301,20 +299,55 @@ namespace MapEditor.View
                 ((UIItemOnTheMap)cnvItemOfMap.Children[i]).seleccionat = false;
             }
         }
-        
 
         private void lsvItemsMap_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             enableButtonsSeleccioItem();
-            Debug.WriteLine(cnvItemOfMap.Children);
             if (cnvItemOfMap.Children.Count > 0)
             {
-                //UIItemOnTheMap uiItemSeleccionat = (UIItemOnTheMap)cnvItemOfMap.Children[lsvItemsMap.SelectedIndex];
-                //uiItemSeleccionat.seleccionat = true;
                 mostrarItemsDinsMapa();
             }
-            
+        }
+
+        private void uiItemOnTheMap_Click(object sender, EventArgs e)
+        {
+            UIItemOnTheMap uiItemMapClicked = (UIItemOnTheMap)sender;
+            Debug.WriteLine(uiItemMapClicked.mapItem.Item.Name);
+        }
+
+        private void nudCellWidht_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Map.getMap().CellWidth = Convert.ToInt32(nudCellWidht.Value);
+            for (int i = 0; i < cnvItemOfMap.Children.Count; i++)
+            {
+                ((UIItemOnTheMap)cnvItemOfMap.Children[i]).Width = Map.getMap().CellWidth;
+            }
+        }
+
+        private void nudCellHeight_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Map.getMap().CellHeight = Convert.ToInt32(nudCellHeight.Value);
+            for (int i = 0; i < cnvItemOfMap.Children.Count; i++)
+            {
+                ((UIItemOnTheMap)cnvItemOfMap.Children[i]).Height = Map.getMap().CellHeight;
+            }
+        }
+
+        private void nudCells_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (nudCellHeight != null)
+            {
+                for (int i = 0; i < cnvItemOfMap.Children.Count; i++)
+                {
+                    Canvas.SetLeft(cnvItemOfMap.Children[i], Convert.ToInt32(nudCellWidht.Value) * Map.getMap().MapItems[i].X);
+                    Canvas.SetTop(cnvItemOfMap.Children[i], Convert.ToInt32(nudCellHeight.Value) * Map.getMap().MapItems[i].Y);
+                }
+            }
+        }
+
+        private void imgMap_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            recolocarItemsMap();
         }
     }
-    
 }

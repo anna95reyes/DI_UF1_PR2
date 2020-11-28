@@ -18,13 +18,14 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="35*"></RowDefinition>
+            <RowDefinition Height="292*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Map Editor" 
-                   HorizontalAlignment="Center" FontSize="50"
-                   Margin="0 20 0 10"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Map Editor" 
+                   HorizontalAlignment="Left" FontSize="50"
+                   Margin="146,20,0,10"/>
         <ListView x:Name="lsvItemsMap"
-                  Grid.Column="0" Grid.Row="1" SelectionChanged="lsvItemsMap_SelectionChanged">
+                  Grid.Column="0" Grid.Row="1" SelectionChanged="lsvItemsMap_SelectionChanged" Grid.RowSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <view:UICardItemMap x:Name="uiCardItemMap" mapItem="{Binding}" Margin="10"></view:UICardItemMap>
@@ -37,7 +38,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
@@ -135,6 +136,7 @@
                               VerticalScrollBarVisibility="auto" HorizontalScrollBarVisibility="auto">
                     <RelativePanel x:Name="rlpMap">
                         <Image x:Name="imgMap" Stretch="None"/>
+                        <!-- crear un tapped per la ui -->
                         <Canvas x:Name="cnvItemOfMap"></Canvas>
                     </RelativePanel>
                 </ScrollViewer>
@@ -168,12 +170,15 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Cell Width:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                            HorizontalAlignment="Right" Margin="20 0 0 0"></TextBlock>
+                <!-- mirar si funciona amb el tapped -->
                 <toolkit:NumericUpDown x:Name="nudCellWidht" Grid.Row="0" Grid.Column="1" 
-                                       Minimum="1" Maximum="100" Margin="10 0 0 0"/>
+                                       Minimum="25" Maximum="100" Margin="10 0 0 0" 
+                                       Tapped="nudCellWidht_Tapped" ValueChanged="nudCells_ValueChanged"/>
                 <TextBlock Text="Cell Height:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                            HorizontalAlignment="Right" Margin="20 30 0 0"></TextBlock>
                 <toolkit:NumericUpDown x:Name="nudCellHeight" Grid.Row="1" Grid.Column="1" 
-                                       Minimum="1" Maximum="100" Margin="10 30 0 0"/>
+                                       Minimum="25" Maximum="100" Margin="10 30 0 0" 
+                                       Tapped="nudCellHeight_Tapped" ValueChanged="nudCells_ValueChanged"/>
             </Grid>
         </Grid>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using MapEditor.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,7 +29,12 @@ namespace MapEditor.View
             this.InitializeComponent();
         }
 
+        public event EventHandler Clicked;
 
+        protected void Clicked_click(object sender, EventArgs e)
+        {
+            Clicked?.Invoke(this, e);
+        }
 
         public Boolean seleccionat
         {
@@ -50,6 +56,7 @@ namespace MapEditor.View
         {
             itemSeleccionat();
         }
+
 
         Border brdItemSelected = new Border();
 
@@ -103,12 +110,11 @@ namespace MapEditor.View
             Image imgItem = new Image();
             imgItem.Source = mapItem.Item.ImageSource;
             imgItem.Stretch = Stretch.Fill;
-
             //Borde de la imatge del Item
             Border brdImage = new Border();
             brdImage.BorderBrush = new SolidColorBrush(Colors.Red);
             brdImage.BorderThickness = new Thickness(2);
-            brdImage.Height = Map.getMap().CellHeight;
+            brdImage.Height = Map.getMap().CellWidth;
             brdImage.Width = Map.getMap().CellWidth;
 
             //Assignacio de la imatge al Borde
@@ -118,7 +124,7 @@ namespace MapEditor.View
 
             itemSeleccionat();
 
-            //Posar la imatge i el borde de la imatge dins del Border que nomes es mostrara si l'item esta seleccionat
+            //Posar la imatge i el borde de la imatge dins del Border que es posara en groc si esta seleccionat
             brdItemSelected.Child = brdImage;
 
             cnvItemMap.Children.Add(brdItemSelected);

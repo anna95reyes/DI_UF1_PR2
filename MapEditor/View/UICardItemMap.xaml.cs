@@ -28,8 +28,6 @@ namespace MapEditor.View
 
         // "propdp" i tabulacio 2 cops
 
-
-
         public MapItem mapItem
         {
             get { return (MapItem)GetValue(mapItemProperty); }
