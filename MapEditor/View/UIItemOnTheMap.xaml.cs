@@ -30,12 +30,7 @@ namespace MapEditor.View
         }
 
         public event EventHandler Clicked;
-
-        protected void Clicked_click(object sender, EventArgs e)
-        {
-            Clicked?.Invoke(this, e);
-        }
-
+        
         public Boolean seleccionat
         {
             get { return (Boolean)GetValue(seleccionatProperty); }

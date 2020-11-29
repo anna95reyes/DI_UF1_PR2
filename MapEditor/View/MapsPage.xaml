@@ -135,7 +135,7 @@
                 <ScrollViewer HorizontalAlignment="Stretch" 
                               VerticalScrollBarVisibility="auto" HorizontalScrollBarVisibility="auto">
                     <RelativePanel x:Name="rlpMap">
-                        <Image x:Name="imgMap" Stretch="None"/>
+                        <Image x:Name="imgMap" Stretch="None" ImageOpened="imgMap_ImageOpened"/>
                         <!-- crear un tapped per la ui -->
                         <Canvas x:Name="cnvItemOfMap"></Canvas>
                     </RelativePanel>

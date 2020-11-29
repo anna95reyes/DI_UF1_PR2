@@ -177,7 +177,7 @@ namespace MapEditor.View
             {
                 if (txtName.Text.Length > 0)
                 {
-                    txtName.Background = new SolidColorBrush(Colors.Red);
+                    txtName.Background = new SolidColorBrush(Colors.LightCoral);
                 }
             }
             else
@@ -189,7 +189,7 @@ namespace MapEditor.View
             {
                 if (txtDescription.Text.Length > 0)
                 {
-                    txtDescription.Background = new SolidColorBrush(Colors.Red);
+                    txtDescription.Background = new SolidColorBrush(Colors.LightCoral);
                 }
             }
             else
