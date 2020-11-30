@@ -190,9 +190,12 @@ namespace MapEditor.View
         {
             if (lsvItemsMap.SelectedIndex >= 0)
             {
+                uiItemOnTheMap.RemoveAt(lsvItemsMap.SelectedIndex);
+
                 cnvItemOfMap.Children.RemoveAt(lsvItemsMap.SelectedIndex);
 
                 Map.getMap().removeItem(lsvItemsMap.SelectedIndex);
+
 
                 mostrarItemsDinsMapa();
             }
@@ -299,7 +302,7 @@ namespace MapEditor.View
             }
         }
 
-        private void lsvItemsMap_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void uiItemSelectedLlistaOMapa()
         {
             enableButtonsSeleccioItem(lsvItemsMap.SelectedIndex);
             if (cnvItemOfMap.Children.Count > 0)
@@ -308,23 +311,16 @@ namespace MapEditor.View
             }
         }
 
-        //private void uiItemOnTheMap_Click(object sender, EventHandler e)
-        //{
-        //    UIItemOnTheMap uiItemMapClicked = (UIItemOnTheMap)sender;
-        //    Debug.WriteLine(uiItemMapClicked.mapItem.Item.Name);
-        //    Debug.WriteLine(e);
-        //}
+        private void lsvItemsMap_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            uiItemSelectedLlistaOMapa();
+        }
 
         private void uiItemOnTheMap_Tapped(object sender, TappedRoutedEventArgs e)
         {
             UIItemOnTheMap uiItemMapClicked = (UIItemOnTheMap)sender;
-            enableButtonsSeleccioItem(uiItemOnTheMap.IndexOf(uiItemMapClicked));
-            if (uiItemOnTheMap.Count > 0)
-            {
-                mostrarItemsDinsMapa();
-            }
-
-            //lsvItemsMap_SelectionChanged(sender, null);
+            lsvItemsMap.SelectedIndex = uiItemOnTheMap.IndexOf(uiItemMapClicked);
+            uiItemSelectedLlistaOMapa();
         }
 
         private void nudCellWidht_Tapped(object sender, TappedRoutedEventArgs e)

@@ -29,7 +29,8 @@ namespace MapEditor.View
             this.InitializeComponent();
         }
 
-        public event EventHandler Clicked;
+        //Utilitzo el Tapped encontes del Clicked
+        //public event EventHandler Clicked;
         
         public Boolean seleccionat
         {
