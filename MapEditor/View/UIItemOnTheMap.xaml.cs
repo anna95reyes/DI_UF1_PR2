@@ -31,7 +31,48 @@ namespace MapEditor.View
 
         //Utilitzo el Tapped encontes del Clicked
         //public event EventHandler Clicked;
-        
+
+        Border brdImage;
+
+        public int cellWidth
+        {
+            get { return (int)GetValue(cellWidthProperty); }
+            set { SetValue(cellWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for cellWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty cellWidthProperty =
+            DependencyProperty.Register("cellWidth", typeof(int), typeof(UIItemOnTheMap), new PropertyMetadata(49, cellsChangedCallbackStatic));
+
+
+        private static void cellsChangedCallbackStatic(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UIItemOnTheMap im = (UIItemOnTheMap)d;
+            im.cellsChangedCallback(e);
+        }
+        private void cellsChangedCallback(DependencyPropertyChangedEventArgs e)
+        {
+            midaCelesCambiada();
+        }
+
+        private void midaCelesCambiada()
+        {
+            brdImage.Height = cellHeight;
+            brdImage.Width = cellWidth;
+        }
+
+        public int cellHeight
+        {
+            get { return (int)GetValue(cellHeightProperty); }
+            set { SetValue(cellHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for cellHeight.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty cellHeightProperty =
+            DependencyProperty.Register("cellHeight", typeof(int), typeof(UIItemOnTheMap), new PropertyMetadata(49, cellsChangedCallbackStatic));
+
+
+
         public Boolean seleccionat
         {
             get { return (Boolean)GetValue(seleccionatProperty); }
@@ -107,11 +148,11 @@ namespace MapEditor.View
             imgItem.Source = mapItem.Item.ImageSource;
             imgItem.Stretch = Stretch.Fill;
             //Borde de la imatge del Item
-            Border brdImage = new Border();
+            brdImage = new Border();
             brdImage.BorderBrush = new SolidColorBrush(Colors.Red);
             brdImage.BorderThickness = new Thickness(2);
-            brdImage.Height = Map.getMap().CellWidth;
-            brdImage.Width = Map.getMap().CellWidth;
+            brdImage.Height = cellHeight;
+            brdImage.Width = cellWidth;
 
             //Assignacio de la imatge al Borde
             brdImage.Child = imgItem;

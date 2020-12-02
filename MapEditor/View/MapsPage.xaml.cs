@@ -82,6 +82,9 @@ namespace MapEditor.View
             Canvas.SetLeft(nouUiItemOnTheMap, Map.getMap().CellWidth * Map.getMap().MapItems[mapItem].X);
             Canvas.SetTop(nouUiItemOnTheMap, Map.getMap().CellHeight * Map.getMap().MapItems[mapItem].Y);
 
+            ((UIItemOnTheMap)cnvItemOfMap.Children[mapItem]).cellWidth = Map.getMap().CellWidth;
+            ((UIItemOnTheMap)cnvItemOfMap.Children[mapItem]).cellHeight = Map.getMap().CellHeight;
+
             uiItemOnTheMap.Add(nouUiItemOnTheMap);
         }
 
@@ -343,10 +346,12 @@ namespace MapEditor.View
 
         private void nudCells_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (nudCellHeight != null)
+            if (nudCellHeight != null && nudCellWidht != null)
             {
                 for (int i = 0; i < cnvItemOfMap.Children.Count; i++)
                 {
+                    ((UIItemOnTheMap)cnvItemOfMap.Children[i]).cellWidth = Convert.ToInt32(nudCellWidht.Value);
+                    ((UIItemOnTheMap)cnvItemOfMap.Children[i]).cellHeight = Convert.ToInt32(nudCellHeight.Value);
                     Canvas.SetLeft(cnvItemOfMap.Children[i], Convert.ToInt32(nudCellWidht.Value) * Map.getMap().MapItems[i].X);
                     Canvas.SetTop(cnvItemOfMap.Children[i], Convert.ToInt32(nudCellHeight.Value) * Map.getMap().MapItems[i].Y);
                 }
