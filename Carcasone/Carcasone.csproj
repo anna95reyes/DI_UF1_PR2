@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{C518DA65-8021-4170-B9FC-4107476CBB6C}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Carcasone</RootNamespace>
+    <AssemblyName>Carcasone</AssemblyName>
+    <DefaultLanguage>es-ES</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SideType.cs" />
+    <Compile Include="View\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fitxa.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\tiles\CastleCenter0.png" />
+    <Content Include="Assets\tiles\CastleCenterEntry0.png" />
+    <Content Include="Assets\tiles\CastleCenterEntry1.png" />
+    <Content Include="Assets\tiles\CastleCenterEntry2.png" />
+    <Content Include="Assets\tiles\CastleCenterEntry3.png" />
+    <Content Include="Assets\tiles\CastleCenterSide0.png" />
+    <Content Include="Assets\tiles\CastleCenterSide1.png" />
+    <Content Include="Assets\tiles\CastleCenterSide2.png" />
+    <Content Include="Assets\tiles\CastleCenterSide3.png" />
+    <Content Include="Assets\tiles\CastleCenterSides0.png" />
+    <Content Include="Assets\tiles\CastleCenterSides1.png" />
+    <Content Include="Assets\tiles\CastleCenterSides2.png" />
+    <Content Include="Assets\tiles\CastleCenterSides3.png" />
+    <Content Include="Assets\tiles\CastleEdge0.png" />
+    <Content Include="Assets\tiles\CastleEdge1.png" />
+    <Content Include="Assets\tiles\CastleEdge2.png" />
+    <Content Include="Assets\tiles\CastleEdge3.png" />
+    <Content Include="Assets\tiles\CastleEdgeRoad0.png" />
+    <Content Include="Assets\tiles\CastleEdgeRoad1.png" />
+    <Content Include="Assets\tiles\CastleEdgeRoad2.png" />
+    <Content Include="Assets\tiles\CastleEdgeRoad3.png" />
+    <Content Include="Assets\tiles\CastleMini0.png" />
+    <Content Include="Assets\tiles\CastleMini1.png" />
+    <Content Include="Assets\tiles\CastleMini2.png" />
+    <Content Include="Assets\tiles\CastleMini3.png" />
+    <Content Include="Assets\tiles\CastleSides0.png" />
+    <Content Include="Assets\tiles\CastleSides1.png" />
+    <Content Include="Assets\tiles\CastleSidesEdge0.png" />
+    <Content Include="Assets\tiles\CastleSidesEdge1.png" />
+    <Content Include="Assets\tiles\CastleSidesEdge2.png" />
+    <Content Include="Assets\tiles\CastleSidesEdge3.png" />
+    <Content Include="Assets\tiles\CastleSidesEdgeRoad0.png" />
+    <Content Include="Assets\tiles\CastleSidesEdgeRoad1.png" />
+    <Content Include="Assets\tiles\CastleSidesEdgeRoad2.png" />
+    <Content Include="Assets\tiles\CastleSidesEdgeRoad3.png" />
+    <Content Include="Assets\tiles\CastleSidesQuad0.png" />
+    <Content Include="Assets\tiles\CastleSidesRoad0.png" />
+    <Content Include="Assets\tiles\CastleSidesRoad1.png" />
+    <Content Include="Assets\tiles\CastleTube0.png" />
+    <Content Include="Assets\tiles\CastleTube1.png" />
+    <Content Include="Assets\tiles\CastleTube2.png" />
+    <Content Include="Assets\tiles\CastleTube3.png" />
+    <Content Include="Assets\tiles\CastleTubeEntries0.png" />
+    <Content Include="Assets\tiles\CastleTubeEntries1.png" />
+    <Content Include="Assets\tiles\CastleTubeEntry0.png" />
+    <Content Include="Assets\tiles\CastleTubeEntry1.png" />
+    <Content Include="Assets\tiles\CastleTubeEntry2.png" />
+    <Content Include="Assets\tiles\CastleTubeEntry3.png" />
+    <Content Include="Assets\tiles\CastleWall0.png" />
+    <Content Include="Assets\tiles\CastleWall1.png" />
+    <Content Include="Assets\tiles\CastleWall2.png" />
+    <Content Include="Assets\tiles\CastleWall3.png" />
+    <Content Include="Assets\tiles\CastleWallCurveLeft0.png" />
+    <Content Include="Assets\tiles\CastleWallCurveLeft1.png" />
+    <Content Include="Assets\tiles\CastleWallCurveLeft2.png" />
+    <Content Include="Assets\tiles\CastleWallCurveLeft3.png" />
+    <Content Include="Assets\tiles\CastleWallCurveRight0.png" />
+    <Content Include="Assets\tiles\CastleWallCurveRight1.png" />
+    <Content Include="Assets\tiles\CastleWallCurveRight2.png" />
+    <Content Include="Assets\tiles\CastleWallCurveRight3.png" />
+    <Content Include="Assets\tiles\CastleWallEntry0.png" />
+    <Content Include="Assets\tiles\CastleWallEntry1.png" />
+    <Content Include="Assets\tiles\CastleWallEntry2.png" />
+    <Content Include="Assets\tiles\CastleWallEntry3.png" />
+    <Content Include="Assets\tiles\CastleWallEntryLeft0.png" />
+    <Content Include="Assets\tiles\CastleWallEntryLeft1.png" />
+    <Content Include="Assets\tiles\CastleWallEntryLeft2.png" />
+    <Content Include="Assets\tiles\CastleWallEntryLeft3.png" />
+    <Content Include="Assets\tiles\CastleWallEntryRight0.png" />
+    <Content Include="Assets\tiles\CastleWallEntryRight1.png" />
+    <Content Include="Assets\tiles\CastleWallEntryRight2.png" />
+    <Content Include="Assets\tiles\CastleWallEntryRight3.png" />
+    <Content Include="Assets\tiles\CastleWallJunction0.png" />
+    <Content Include="Assets\tiles\CastleWallJunction1.png" />
+    <Content Include="Assets\tiles\CastleWallJunction2.png" />
+    <Content Include="Assets\tiles\CastleWallJunction3.png" />
+    <Content Include="Assets\tiles\CastleWallRoad0.png" />
+    <Content Include="Assets\tiles\CastleWallRoad1.png" />
+    <Content Include="Assets\tiles\CastleWallRoad2.png" />
+    <Content Include="Assets\tiles\CastleWallRoad3.png" />
+    <Content Include="Assets\tiles\Monastery0.png" />
+    <Content Include="Assets\tiles\Monastery1.png" />
+    <Content Include="Assets\tiles\MonasteryCastle0.png" />
+    <Content Include="Assets\tiles\MonasteryCastle1.png" />
+    <Content Include="Assets\tiles\MonasteryCastle2.png" />
+    <Content Include="Assets\tiles\MonasteryCastle3.png" />
+    <Content Include="Assets\tiles\MonasteryJunction0.png" />
+    <Content Include="Assets\tiles\MonasteryRoad0.png" />
+    <Content Include="Assets\tiles\MonasteryRoad1.png" />
+    <Content Include="Assets\tiles\MonasteryRoad2.png" />
+    <Content Include="Assets\tiles\MonasteryRoad3.png" />
+    <Content Include="Assets\tiles\Null0.png" />
+    <Content Include="Assets\tiles\Null1.png" />
+    <Content Include="Assets\tiles\Road0.png" />
+    <Content Include="Assets\tiles\Road1.png" />
+    <Content Include="Assets\tiles\Road2.png" />
+    <Content Include="Assets\tiles\Road3.png" />
+    <Content Include="Assets\tiles\RoadCrossLarge0.png" />
+    <Content Include="Assets\tiles\RoadCrossSmall0.png" />
+    <Content Include="Assets\tiles\RoadCrossSmall1.png" />
+    <Content Include="Assets\tiles\RoadCrossSmall2.png" />
+    <Content Include="Assets\tiles\RoadCrossSmall3.png" />
+    <Content Include="Assets\tiles\RoadCurve0.png" />
+    <Content Include="Assets\tiles\RoadCurve1.png" />
+    <Content Include="Assets\tiles\RoadCurve2.png" />
+    <Content Include="Assets\tiles\RoadCurve3.png" />
+    <Content Include="Assets\tiles\RoadEnd0.png" />
+    <Content Include="Assets\tiles\RoadEnd1.png" />
+    <Content Include="Assets\tiles\RoadEnd2.png" />
+    <Content Include="Assets\tiles\RoadEnd3.png" />
+    <Content Include="Assets\tiles\RoadJunctionLarge0.png" />
+    <Content Include="Assets\tiles\RoadJunctionSmall0.png" />
+    <Content Include="Assets\tiles\RoadJunctionSmall1.png" />
+    <Content Include="Assets\tiles\RoadJunctionSmall2.png" />
+    <Content Include="Assets\tiles\RoadJunctionSmall3.png" />
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="View\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.12</Version>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
