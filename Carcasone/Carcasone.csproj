@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\FitxaMapa.cs" />
+    <Compile Include="Model\Nino.cs" />
+    <Compile Include="Model\PosType.cs" />
     <Compile Include="Model\SideType.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
