@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="Carcasone.View.UICardRepSides"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Carcasone.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="70"
+    Width="300">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Image Grid.Column="0" Source="ms-appx:///Assets/tiles/CastleEdge0.png"/>
+        <TextBlock Grid.Column="1" Text="x1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold"/>
+        <Image Grid.Column="2" Source="ms-appx:///Assets/icons/icons8-castle-50.png" Margin="10"/>
+        <Image Grid.Column="2" Source="ms-appx:///Assets/icons/icons8-church-60.png" Margin="10" Visibility="Collapsed"/>
+        <Image Grid.Column="3" Source="ms-appx:///Assets/icons/icons8-path-50.png" Margin="10" />
+    </Grid>
+</UserControl>

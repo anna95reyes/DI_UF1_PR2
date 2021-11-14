@@ -24,7 +24,7 @@ namespace Carcasone.Model
         private SideType[] sides;
 
         /// <summary>
-        /// Si la fitxa conté un nuno llabors
+        /// Si la fitxa conté un nino llavors
         /// elNino != null
         /// </summary>
 

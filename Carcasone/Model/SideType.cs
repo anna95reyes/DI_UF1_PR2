@@ -8,8 +8,8 @@ namespace Carcasone.Model
 {
     public enum SideType
     {
-        CASTLE,
-        PATH,
-        FIELD
+        CASTLE, //castell
+        PATH, //cami
+        FIELD //camp
     }
 }

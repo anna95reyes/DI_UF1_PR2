@@ -4,11 +4,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Carcasone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <Grid>
+        <NavigationView ItemInvoked="NavigationView_ItemInvoked" PaneDisplayMode="LeftCompact" IsPaneOpen="false">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="nviCardEditor" Content="Card Edit">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/icons/icons8-edit-64.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="nviGame" Content="Game">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/icons/icons8-circled-play-50.png"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
 
+            <ScrollViewer>
+                <Frame x:Name="frmPrincipal" IsTabStop="True"></Frame>
+            </ScrollViewer>
+            
+        </NavigationView>
     </Grid>
 </Page>

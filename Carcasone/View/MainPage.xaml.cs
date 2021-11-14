@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Carcasone.View;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,24 @@ namespace Carcasone
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            frmPrincipal.Navigate(typeof(CardEditorPage));
+            nviCardEditor.IsSelected = true;
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (nviCardEditor.Content.Equals(args.InvokedItem))
+            {
+                frmPrincipal.Navigate(typeof(CardEditorPage));
+            } 
+            else if (nviGame.Content.Equals(args.InvokedItem))
+            {
+                frmPrincipal.Navigate(typeof(GamePage));
+            }
         }
     }
 }
