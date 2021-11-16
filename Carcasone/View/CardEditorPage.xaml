@@ -80,21 +80,37 @@
                 </Grid.ColumnDefinitions>
             
                 <!-- Repeticions -->
-                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                <StackPanel Grid.Column="0" Orientation="Vertical">
                     <TextBlock Text="Repeticions:*" Margin="5"></TextBlock>
                     <ComboBox x:Name="cbxRepeticions" Margin="5"></ComboBox>
                 </StackPanel>
                 <!-- Titol i imatge -->
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                <StackPanel Grid.Column="1" Orientation="Vertical">
                     <TextBlock Text="Title:*" Margin="5"></TextBlock>
                     <TextBox x:Name="txtTitle" Margin="5"></TextBox>
-                    <Grid Height="195" Width="185">
+                    <Grid Height="195" Width="185" HorizontalAlignment="Left">
                         <Image x:Name="imgFitxa" Height="150" HorizontalAlignment="Left" Source="ms-appx:///Assets/tiles/CastleCenter0.png"></Image>
                         <Button x:Name="btnImatgeFitxa" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                             <Image Source="/Assets/icons/icons8-add-image-48.png" Width="30"/>
                         </Button>
                     </Grid>
                 </StackPanel>
+                <!-- Extensio -->
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Extension:*" Margin="5" Grid.Column="0" Grid.Row="0"></TextBlock>
+                    
+                    
+                </Grid>
+                
             </Grid>
 
             <!-- Segona fila -->
