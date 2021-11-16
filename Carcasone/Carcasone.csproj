@@ -119,8 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Extensio.cs" />
     <Compile Include="Model\FitxaMapa.cs" />
+    <Compile Include="Model\INotifyPropertyChanced.cs" />
     <Compile Include="Model\Nino.cs" />
     <Compile Include="Model\PosType.cs" />
     <Compile Include="Model\SideType.cs" />
@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\icons\icons8-add-64.png" />
+    <Content Include="Assets\icons\icons8-add-image-48.png" />
     <Content Include="Assets\icons\icons8-cancel-64.png" />
     <Content Include="Assets\icons\icons8-castle-50.png" />
     <Content Include="Assets\icons\icons8-church-60.png" />
@@ -278,6 +279,7 @@
     <Content Include="Assets\tiles\RoadJunctionSmall1.png" />
     <Content Include="Assets\tiles\RoadJunctionSmall2.png" />
     <Content Include="Assets\tiles\RoadJunctionSmall3.png" />
+    <Content Include="FodyWeavers.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -310,11 +312,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fody">
+      <Version>6.6.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody">
+      <Version>3.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

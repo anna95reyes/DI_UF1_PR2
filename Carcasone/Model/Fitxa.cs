@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Carcasone.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Carcasone.Model
 {
-    public class Fitxa
+    public class Fitxa : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private static Boolean isStartingTile;
         private static ObservableCollection<Fitxa> _fitxes;
@@ -20,8 +23,9 @@ namespace Carcasone.Model
         private string notes;
         private SideType[] sides;
         private Boolean isMonastery;
+        private String extens;
 
-        public Fitxa(int codi, string title, string imagePath, int repeticions, string notes, SideType[] sides, bool isMonastery)
+        public Fitxa(int codi, string title, string imagePath, int repeticions, string notes, SideType[] sides, bool isMonastery, String extens)
         {
             Codi = codi;
             Title = title;
@@ -30,6 +34,7 @@ namespace Carcasone.Model
             Notes = notes;
             Sides = sides;
             IsMonastery = isMonastery;
+            Extens = extens;
         }
 
         public static bool IsStartingTile { get => isStartingTile; set => isStartingTile = value; }
@@ -48,6 +53,7 @@ namespace Carcasone.Model
             }
         }
         public bool IsMonastery { get => isMonastery; set => isMonastery = value; }
+        public String Extens { get => extens; set => extens = value; }
 
         public static ObservableCollection<Fitxa> getFitxes()
         {
@@ -57,28 +63,28 @@ namespace Carcasone.Model
 
                 SideType[] s1 = new SideType[4];
                 s1[0] = SideType.CASTLE;
-                Fitxa f1 = new Fitxa(1, "Castle Center", "ms-appx:///Assets/tiles/CastleCenter0.png", 4, "", s1, false);
+                Fitxa f1 = new Fitxa(1, "Castle Center", "ms-appx:///Assets/tiles/CastleCenter0.png", 4, "", s1, false, CardEditorPage.getExtensions()[0]);
 
                 SideType[] s2 = new SideType[4];
                 s2[0] = SideType.FIELD;
                 s2[1] = SideType.FIELD;
                 s2[2] = SideType.FIELD;
                 s2[3] = SideType.PATH;
-                Fitxa f2 = new Fitxa(2, "Castle Center", "ms-appx:///Assets/tiles/MonasteryRoad0.png", 4, "", s2, true);
+                Fitxa f2 = new Fitxa(2, "Castle Center", "ms-appx:///Assets/tiles/MonasteryRoad0.png", 4, "", s2, true, CardEditorPage.getExtensions()[0]);
 
                 SideType[] s3 = new SideType[4];
                 s3[0] = SideType.FIELD;
                 s3[1] = SideType.FIELD;
                 s3[2] = SideType.FIELD;
                 s3[3] = SideType.FIELD;
-                Fitxa f3 = new Fitxa(3, "Castle Center", "ms-appx:///Assets/tiles/Monastery0.png", 4, "", s3, true);
+                Fitxa f3 = new Fitxa(3, "Castle Center", "ms-appx:///Assets/tiles/Monastery0.png", 4, "", s3, true, CardEditorPage.getExtensions()[1]);
 
                 SideType[] s4 = new SideType[4];
                 s4[0] = SideType.FIELD;
                 s4[1] = SideType.PATH;
                 s4[2] = SideType.FIELD;
                 s4[3] = SideType.PATH;
-                Fitxa f4 = new Fitxa(3, "Castle Center", "ms-appx:///Assets/tiles/Road0.png", 4, "", s4, false);
+                Fitxa f4 = new Fitxa(3, "Castle Center", "ms-appx:///Assets/tiles/Road0.png", 4, "", s4, false, CardEditorPage.getExtensions()[1]);
 
                 _fitxes.Add(f1);
                 _fitxes.Add(f2);

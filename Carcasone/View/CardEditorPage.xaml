@@ -9,6 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <!--Use a collection view source for content that presents a list of items that can be grouped or sorted.-->
+        <CollectionViewSource x:Key="cvs" x:Name="cvs" IsSourceGrouped="True" />
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -29,12 +34,25 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="lsvFitxes" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Right">
+            <ListView x:Name="lsvFitxes" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Right"
+                      ItemsSource="{Binding Source={StaticResource cvs}}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <view:UICardRepSides fitxa="{Binding}" Grid.Row="1" Grid.Column="0"></view:UICardRepSides>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Extension:" FontSize="24" FontWeight="Bold" Foreground="Red" Margin="5"/>
+                                    <TextBlock Text="{Binding Key}" FontSize="24" FontWeight="Bold" Foreground="Red" Margin="5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
             </ListView>
             <Button x:Name="btnAddFitxes" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
                 <Image Source="/Assets/icons/icons8-add-64.png" Width="30"/>
@@ -45,6 +63,41 @@
             <Button x:Name="btnEditFitxes" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
                 <Image Source="/Assets/icons/icons8-edit-50.png"  Width="30"/>
             </Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="30 10 10 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!-- Primera fila -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.7*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            
+                <!-- Repeticions -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                    <TextBlock Text="Repeticions:*" Margin="5"></TextBlock>
+                    <ComboBox x:Name="cbxRepeticions" Margin="5"></ComboBox>
+                </StackPanel>
+                <!-- Titol i imatge -->
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Title:*" Margin="5"></TextBlock>
+                    <TextBox x:Name="txtTitle" Margin="5"></TextBox>
+                    <Grid Height="195" Width="185">
+                        <Image x:Name="imgFitxa" Height="150" HorizontalAlignment="Left" Source="ms-appx:///Assets/tiles/CastleCenter0.png"></Image>
+                        <Button x:Name="btnImatgeFitxa" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Image Source="/Assets/icons/icons8-add-image-48.png" Width="30"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <!-- Segona fila -->
         </Grid>
     </Grid>
 </Page>
