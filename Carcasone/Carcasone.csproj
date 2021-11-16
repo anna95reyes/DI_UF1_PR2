@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Extensio.cs" />
     <Compile Include="Model\FitxaMapa.cs" />
     <Compile Include="Model\Nino.cs" />
     <Compile Include="Model\PosType.cs" />

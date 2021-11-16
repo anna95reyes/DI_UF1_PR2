@@ -9,18 +9,17 @@
     Height="70"
     Width="300">
 
-    <Grid>
+    <Grid x:Name="grdFitxa">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <Image Grid.Column="0" Source="ms-appx:///Assets/tiles/CastleEdge0.png"/>
-        <TextBlock Grid.Column="1" Text="x1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold"/>
-        <Image Grid.Column="2" Source="ms-appx:///Assets/icons/icons8-castle-50.png" Margin="10"/>
-        <Image Grid.Column="2" Source="ms-appx:///Assets/icons/icons8-church-60.png" Margin="10" Visibility="Collapsed"/>
-        <Image Grid.Column="3" Source="ms-appx:///Assets/icons/icons8-path-50.png" Margin="10" />
+
+        <Image x:Name="imgFitxa" Grid.Column="0" Margin="5"/>
+        <TextBlock x:Name="txbRepFitxa" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   FontSize="40" FontWeight="Bold" Margin="5"/>
     </Grid>
 </UserControl>
