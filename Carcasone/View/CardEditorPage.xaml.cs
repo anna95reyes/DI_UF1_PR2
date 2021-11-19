@@ -42,10 +42,10 @@ namespace Carcasone.View
 
             cbxRepeticions.ItemsSource = new int[] { 1, 2, 3, 4 };
             cbxRepeticions.SelectedIndex = 0;
+
+            lsvExtensions.ItemsSource = CardEditorPage.getExtensions();
+            lsvExtensions.SelectedIndex = 0;
         }
-
-
-
 
         #region addExtensio, removeExtensio, getExtensions
         public Boolean addExtensio(String novaExtensio)
@@ -83,6 +83,8 @@ namespace Carcasone.View
             return _extensions;
         }
         #endregion addExtensio, removeExtensio, getExtensions
+
+
 
     }
 }
