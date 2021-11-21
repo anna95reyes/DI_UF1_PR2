@@ -35,10 +35,10 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <ListView x:Name="lsvFitxes" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Right"
-                      ItemsSource="{Binding Source={StaticResource cvs}}">
+                      ItemsSource="{Binding Source={StaticResource cvs}}" SelectionChanged="lsvFitxes_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <view:UICardRepSides fitxa="{Binding}" Grid.Row="1" Grid.Column="0"></view:UICardRepSides>
+                        <view:UICardRepSides x:Name="uiCardRepSides" fitxa="{Binding}" Grid.Row="1" Grid.Column="0"></view:UICardRepSides>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.GroupStyle>
@@ -60,7 +60,7 @@
             <Button x:Name="btnDeleteFitxes" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
                 <Image Source="/Assets/icons/icons8-delete-64.png"  Width="30"/>
             </Button>
-            <Button x:Name="btnEditFitxes" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="btnEditFitxes" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Margin="10" Click="btnEditFitxes_Click">
                 <Image Source="/Assets/icons/icons8-edit-50.png"  Width="30"/>
             </Button>
         </Grid>
@@ -82,15 +82,15 @@
                 <!-- Repeticions -->
                 <StackPanel Grid.Column="0" Orientation="Vertical">
                     <TextBlock Text="Repeticions:*" Margin="5"></TextBlock>
-                    <ComboBox x:Name="cbxRepeticions" Margin="5"></ComboBox>
+                    <ComboBox x:Name="cbxRepeticions" Margin="5" SelectionChanged="cbxRepeticions_SelectionChanged"></ComboBox>
                 </StackPanel>
                 <!-- Titol i imatge -->
                 <StackPanel Grid.Column="1" Orientation="Vertical">
                     <TextBlock Text="Title:*" Margin="5"></TextBlock>
-                    <TextBox x:Name="txtTitle" Margin="5"></TextBox>
+                    <TextBox x:Name="txtTitle" Margin="5" TextChanged="txtTitle_TextChanged"></TextBox>
                     <Grid Height="195" Width="185" HorizontalAlignment="Left"  Margin="5">
-                        <Image x:Name="imgFitxa" Height="150" HorizontalAlignment="Left" Source="ms-appx:///Assets/tiles/CastleCenter0.png"></Image>
-                        <Button x:Name="btnImatgeFitxa" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Image x:Name="imgFitxa" Height="150" Width="150" HorizontalAlignment="Left"></Image>
+                        <Button x:Name="btnImatgeFitxa" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnImatgeFitxa_Click">
                             <Image Source="/Assets/icons/icons8-add-image-48.png" Width="30"/>
                         </Button>
                     </Grid>
@@ -111,7 +111,8 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Extension:*" Margin="5" Grid.Column="0" Grid.Row="0"></TextBlock>
-                    <ListView x:Name="lsvExtensions" Margin="5" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Background="LightGray" MaxHeight="120" MinHeight="120"></ListView>
+                    <ListView x:Name="lsvExtensions" Margin="5" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Background="LightGray" MaxHeight="120" MinHeight="120"
+                              SelectionChanged="lsvExtensions_SelectionChanged"></ListView>
                     <Button x:Name="btnAddExtension" Margin="5" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Height="38" Width="49">
                         <Image Source="/Assets/icons/icons8-add-64.png" Width="25"/>
                     </Button>
@@ -131,7 +132,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Notes: " Grid.Column="0" Margin="5 20 5 5"/>
-                <TextBox x:Name="txtNotes"  Grid.Column="1" Margin="10 20 30 20" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="110"></TextBox>
+                <TextBox x:Name="txtNotes"  Grid.Column="1" Margin="10 20 30 20" TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="110" TextChanged="txtNotes_TextChanged"></TextBox>
                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1" Margin="50 10" Width="300" HorizontalAlignment="Left">
                     <StackPanel Orientation="Vertical">
                         <Border Margin="10 -10 0 0" Background="#FFF3F3F3" HorizontalAlignment="Left" Padding="5 0">
@@ -144,11 +145,11 @@
                             </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0" Orientation="Horizontal">
                                 <Image Source="/Assets/icons/icons8-finish-flag-60.png" Width="30" Margin="5"/>
-                                <CheckBox x:Name="cbxExtraStartingTile" Content="Starting tile" Margin="15 5"></CheckBox>
+                                <CheckBox x:Name="ckbExtraStartingTile" Content="Starting tile" Margin="15 5" Checked="ckbExtraStartingTile_Checked" Unchecked="ckbExtraStartingTile_Unchecked"></CheckBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" >
                                 <Image Source="/Assets/icons/icons8-church-60.png" Width="30" Margin="5"/>
-                                <CheckBox x:Name="cbxExtraMonastery" Content="Monastery" Margin="15 5"></CheckBox>
+                                <CheckBox x:Name="ckbExtraMonastery" Content="Monastery" Margin="15 5" Checked="ckbExtraMonastery_Checked" Unchecked="ckbExtraMonastery_Checked"></CheckBox>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -157,6 +158,21 @@
             
             <!-- Tercera fila -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="imgSidesFitxa" Grid.Row="1" Grid.Column="1" Height="250" Width="250" Margin="10"/>
+                <ComboBox x:Name="cbxSide0Fitxa" Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="80" SelectionChanged="cbxSide0Fitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSide1Fitxa" Margin="5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="80" SelectionChanged="cbxSide1Fitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSide2Fitxa" Margin="5" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="80" SelectionChanged="cbxSide2Fitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSide3Fitxa" Margin="5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50" Width="80" SelectionChanged="cbxSide3Fitxa_SelectionChanged"></ComboBox>
             </Grid>
 
             <!-- Fila botons -->
@@ -165,13 +181,13 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnCancelFormulari" Grid.Column="0" HorizontalAlignment="Center">
+                <Button x:Name="btnCancelFormulari" Grid.Column="0" HorizontalAlignment="Center" Click="btnCancelFormulari_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/icons/icons8-cancel-64.png" Width="30"/>
                         <TextBlock Text="Cancel" VerticalAlignment="Center" Margin="5 0 0 0"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnSaveFormulari" Grid.Column="1" HorizontalAlignment="Center">
+                <Button x:Name="btnSaveFormulari" Grid.Column="1" HorizontalAlignment="Center" Click="btnSaveFormulari_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/icons/icons8-save-60.png" Width="30"/>
                         <TextBlock Text="Save" VerticalAlignment="Center" Margin="5 0 0 0"/>

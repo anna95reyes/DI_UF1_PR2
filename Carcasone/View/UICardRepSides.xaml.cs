@@ -46,11 +46,15 @@ namespace Carcasone.View
         private void fitxaChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             int qtatSides = fitxa.Sides.Length;
+            
             bool teMonasteri = fitxa.IsMonastery;
-
             bool teCastle = teSides(qtatSides, SideType.CASTLE);
-
             bool tePath = teSides(qtatSides, SideType.PATH);
+
+            BitmapImage btmImgFitxa = new BitmapImage(new Uri(fitxa.ImagePath));
+            imgFitxa.Source = btmImgFitxa;
+
+            txbRepFitxa.Text = "x" + fitxa.Repeticions.ToString();
 
             colocacioSides(teMonasteri, teCastle, tePath);
         }
@@ -76,47 +80,26 @@ namespace Carcasone.View
             String uriImgCastle = "ms-appx:///Assets/icons/icons8-castle-50.png";
             String uriImgPath = "ms-appx:///Assets/icons/icons8-path-50.png";
 
-            BitmapImage btmImgFitxa = new BitmapImage(new Uri(fitxa.ImagePath));
-            imgFitxa.Source = btmImgFitxa;
-
-            txbRepFitxa.Text = "x" + fitxa.Repeticions.ToString();
-
             if (grdFitxa.Children.Count == 3) grdFitxa.Children.RemoveAt(2);
             if (grdFitxa.Children.Count == 4) grdFitxa.Children.RemoveAt(3);
             if (grdFitxa.Children.Count == 5) grdFitxa.Children.RemoveAt(4);
 
-            if (teMonasteri && !teCastle && !tePath)
+            int pos = 2;
+
+            if (teMonasteri)
             {
-                imatgeSide(uriImgMonasteri, 2);
+                imatgeSide(uriImgMonasteri, pos);
+                pos++;
             }
-            else if (!teMonasteri && teCastle && !tePath)
+            if (teCastle)
             {
-                imatgeSide(uriImgCastle, 2);
+                imatgeSide(uriImgCastle, pos);
+                pos++;
             }
-            else if (!teMonasteri && !teCastle && tePath)
+            if (tePath)
             {
-                imatgeSide(uriImgPath, 2);
-            }
-            else if (teMonasteri && teCastle && !tePath)
-            {
-                imatgeSide(uriImgMonasteri, 2);
-                imatgeSide(uriImgCastle, 3);
-            }
-            else if (!teMonasteri && teCastle && tePath)
-            {
-                imatgeSide(uriImgCastle, 2);
-                imatgeSide(uriImgPath, 3);
-            }
-            else if (teMonasteri && !teCastle && tePath)
-            {
-                imatgeSide(uriImgMonasteri, 2);
-                imatgeSide(uriImgPath, 3);
-            }
-            else if (teMonasteri && teCastle && tePath)
-            {
-                imatgeSide(uriImgMonasteri, 2);
-                imatgeSide(uriImgCastle, 3);
-                imatgeSide(uriImgPath, 4);
+                imatgeSide(uriImgPath, pos);
+                pos++;
             }
         }
 
