@@ -181,11 +181,33 @@ namespace Carcasone.Model
             return _fitxes;
         }
 
+        public static bool addFitxa(Fitxa novaFitxa)
+        {
+            if (_fitxes.Contains(novaFitxa)) {
+                return false; 
+            }
+            _fitxes.Add(novaFitxa);
+            return true;
+        }
+
+        public static bool removeFitxa(Fitxa fitxa)
+        {
+            if (!_fitxes.Contains(fitxa))
+            {
+                return false;
+            }
+            _fitxes.Remove(fitxa);
+            return true;
+        }
+
         public int getCodi()
         {
             return Codi;
         }
 
+
+
+        #region validacions
         public static bool validaCodi(int codi)
         {
             return codi >= 0;
@@ -216,6 +238,19 @@ namespace Carcasone.Model
         {
             return extensio.Length > 0;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Fitxa fitxa &&
+                   Codi == fitxa.Codi;
+        }
+
+        public override int GetHashCode()
+        {
+            return -1172468304 + Codi.GetHashCode();
+        }
+
+        #endregion validacions
 
     }
 }

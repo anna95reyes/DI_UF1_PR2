@@ -54,10 +54,10 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
-            <Button x:Name="btnAddFitxes" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="btnAddFitxes" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Margin="10" Click="btnAddFitxes_Click">
                 <Image Source="/Assets/icons/icons8-add-64.png" Width="30"/>
             </Button>
-            <Button x:Name="btnDeleteFitxes" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="btnDeleteFitxes" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Margin="10" Click="btnDeleteFitxes_Click">
                 <Image Source="/Assets/icons/icons8-delete-64.png"  Width="30"/>
             </Button>
             <Button x:Name="btnEditFitxes" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Margin="10" Click="btnEditFitxes_Click">

@@ -50,8 +50,11 @@ namespace Carcasone.View
             txbTitlePage.Text = pageName;
 
             //Es el mateix que fer: lsvFitxes.ItemsSource = Fitxa.getFitxes(); pero per poder agrupar
+            //lsvFitxes.ItemsSource = Fitxa.getFitxes();
             IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
             this.cvs.Source = groups;
+
+            lsvFitxes.SelectedIndex = 0;
 
             cbxRepeticions.ItemsSource = new int[] { 1, 2, 3, 4 };
             cbxRepeticions.SelectedIndex = 0;
@@ -75,8 +78,16 @@ namespace Carcasone.View
                 netejarFormulari();
                 mostrarDadesFormulari();
                 activarDesactivarEdicio(false);
-            } else if (estat == Estat.MODIFICACIO)
+            } 
+            else if (estat == Estat.MODIFICACIO)
             {
+                activarDesactivarEdicio(true);
+                btnCancelFormulari.IsEnabled = false;
+                btnSaveFormulari.IsEnabled = false;
+            }
+            else if (estat == Estat.ALTA)
+            {
+                netejarFormulari();
                 activarDesactivarEdicio(true);
                 btnCancelFormulari.IsEnabled = false;
                 btnSaveFormulari.IsEnabled = false;
@@ -233,17 +244,15 @@ namespace Carcasone.View
         private bool formulariValid()
         {
             bool formulariValid = false;
-            if (lsvFitxes.SelectedItem != null)
+            
+            if (cbxRepeticions.SelectedItem != null &&
+                Fitxa.validaTitle(txtTitle.Text) &&
+                lsvExtensions.SelectedItem != null &&
+                imgFitxa.Source != null &&
+                cbxSide0Fitxa.SelectedItem != null && cbxSide1Fitxa.SelectedItem != null && 
+                cbxSide2Fitxa.SelectedItem != null && cbxSide3Fitxa.SelectedItem != null)
             {
-                if (cbxRepeticions.SelectedItem != null &&
-                    Fitxa.validaTitle(txtTitle.Text) &&
-                    lsvExtensions.SelectedItem != null &&
-                    imgFitxa.Source != null &&
-                    cbxSide0Fitxa.SelectedItem != null && cbxSide1Fitxa.SelectedItem != null && 
-                    cbxSide2Fitxa.SelectedItem != null && cbxSide3Fitxa.SelectedItem != null)
-                {
-                    formulariValid = true;
-                }
+                formulariValid = true;
             }
 
             return formulariValid;
@@ -251,12 +260,15 @@ namespace Carcasone.View
 
         private void validarDadesFormulari()
         {
-            if (lsvFitxes.SelectedItem != null)
+            
+            if (formulariValid())
             {
-                Fitxa fitxaEditada = (Fitxa)lsvFitxes.SelectedItem;
+                bool hiHaCanvis = false;
+                if (lsvFitxes.SelectedItem != null)
+                {
+                    Fitxa fitxaEditada = (Fitxa)lsvFitxes.SelectedItem;
 
-                if (formulariValid()) {
-                    bool hiHaCanvis = !(
+                    hiHaCanvis = !(
                     fitxaEditada.Repeticions.Equals((int)cbxRepeticions.SelectedItem) &&
                     fitxaEditada.Title.Equals(txtTitle.Text) &&
                     fitxaEditada.Extens.Equals((string)lsvExtensions.SelectedItem) &&
@@ -269,18 +281,17 @@ namespace Carcasone.View
                     fitxaEditada.Sides[2].Equals(sideSeleccionat(cbxSide2Fitxa.SelectedIndex)) &&
                     fitxaEditada.Sides[3].Equals(sideSeleccionat(cbxSide3Fitxa.SelectedIndex))
                     );
-
-                    if (hiHaCanvis)
-                    {
-                        btnCancelFormulari.IsEnabled = true;
-                        btnSaveFormulari.IsEnabled = true;
-                    }
                 }
-                else
+                if (estat == Estat.MODIFICACIO && hiHaCanvis || estat == Estat.ALTA)
                 {
                     btnCancelFormulari.IsEnabled = true;
-                    btnSaveFormulari.IsEnabled = false;
+                    btnSaveFormulari.IsEnabled = true;
                 }
+            }
+            else
+            {
+                btnCancelFormulari.IsEnabled = true;
+                btnSaveFormulari.IsEnabled = false;
             }
         }
 
@@ -382,6 +393,29 @@ namespace Carcasone.View
         {
             if (estat == Estat.ALTA)
             {
+                SideType[] sides = new SideType[4];
+
+                sides[0] = sideSeleccionat(cbxSide0Fitxa.SelectedIndex);
+                sides[1] = sideSeleccionat(cbxSide1Fitxa.SelectedIndex);
+                sides[2] = sideSeleccionat(cbxSide2Fitxa.SelectedIndex);
+                sides[3] = sideSeleccionat(cbxSide3Fitxa.SelectedIndex);
+
+                Fitxa novaFitxa = new Fitxa(txtTitle.Text, ((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri, (int)cbxRepeticions.SelectedItem,
+                                            txtNotes.Text, sides, (bool)ckbExtraMonastery.IsChecked, (string)lsvExtensions.SelectedItem);
+                if (ckbExtraStartingTile.IsChecked != null)
+                {
+                    if ((bool)ckbExtraStartingTile.IsChecked == true)
+                    {
+                        Fitxa.IsStartingTile = novaFitxa;
+                    }
+                }
+                Fitxa.addFitxa(novaFitxa);
+                lsvFitxes.SelectedItem = novaFitxa;
+
+                //lsvFitxes.ItemsSource = Fitxa.getFitxes();
+                //lsvFitxes.ItemsSource = null;
+                //IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
+                //this.cvs.Source = groups;
 
             }
             else
@@ -445,6 +479,33 @@ namespace Carcasone.View
                 imgSidesFitxa.Source = tmpBitmap;
 
                 validarDadesFormulari();
+            }
+        }
+
+        private void btnAddFitxes_Click(object sender, RoutedEventArgs e)
+        {
+            lsvFitxes.SelectedItem = null;
+            canviEstat(Estat.ALTA);
+        }
+
+        private void btnDeleteFitxes_Click(object sender, RoutedEventArgs e)
+        {
+            if (estat == Estat.VIEW)
+            {
+                if (lsvFitxes.SelectedItem != null)
+                {
+                    Fitxa fitxaAElimnar = (Fitxa)lsvFitxes.SelectedItem;
+                    if (Fitxa.removeFitxa(fitxaAElimnar))
+                    {
+                        netejarFormulari();
+                        //lsvFitxes.ItemsSource = Fitxa.getFitxes();
+                        //lsvFitxes.ItemsSource = null;
+                        
+                        //IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
+                        //this.cvs.Source = groups;
+                    }
+
+                }
             }
         }
     }

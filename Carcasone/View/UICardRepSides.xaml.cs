@@ -45,18 +45,21 @@ namespace Carcasone.View
 
         private void fitxaChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            int qtatSides = fitxa.Sides.Length;
-            
-            bool teMonasteri = fitxa.IsMonastery;
-            bool teCastle = teSides(qtatSides, SideType.CASTLE);
-            bool tePath = teSides(qtatSides, SideType.PATH);
+            if (fitxa != null)
+            {
+                int qtatSides = fitxa.Sides.Length;
 
-            BitmapImage btmImgFitxa = new BitmapImage(new Uri(fitxa.ImagePath));
-            imgFitxa.Source = btmImgFitxa;
+                bool teMonasteri = fitxa.IsMonastery;
+                bool teCastle = teSides(qtatSides, SideType.CASTLE);
+                bool tePath = teSides(qtatSides, SideType.PATH);
 
-            txbRepFitxa.Text = "x" + fitxa.Repeticions.ToString();
+                BitmapImage btmImgFitxa = new BitmapImage(new Uri(fitxa.ImagePath));
+                imgFitxa.Source = btmImgFitxa;
 
-            colocacioSides(teMonasteri, teCastle, tePath);
+                txbRepFitxa.Text = "x" + fitxa.Repeticions.ToString();
+
+                colocacioSides(teMonasteri, teCastle, tePath);
+            }
         }
         
         private bool teSides (int qtatSides, SideType sides)
