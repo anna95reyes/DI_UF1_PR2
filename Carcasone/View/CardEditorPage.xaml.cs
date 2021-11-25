@@ -39,6 +39,7 @@ namespace Carcasone.View
         private static ObservableCollection<String> _extensions;
         private ObservableCollection<Image> imgSides = null;
         Estat estat = Estat.VIEW;
+        IEnumerable<IGrouping<String, Fitxa>> groups;
 
         public CardEditorPage()
         {
@@ -51,10 +52,10 @@ namespace Carcasone.View
 
             //Es el mateix que fer: lsvFitxes.ItemsSource = Fitxa.getFitxes(); pero per poder agrupar
             //lsvFitxes.ItemsSource = Fitxa.getFitxes();
-            IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
-            this.cvs.Source = groups;
+            //lsvFitxes.SelectedIndex = 0;
 
-            lsvFitxes.SelectedIndex = 0;
+            groups = from c in Fitxa.getFitxes() group c by c.Extens;
+            this.cvs.Source = groups;
 
             cbxRepeticions.ItemsSource = new int[] { 1, 2, 3, 4 };
             cbxRepeticions.SelectedIndex = 0;
@@ -99,7 +100,7 @@ namespace Carcasone.View
             if (lsvFitxes.SelectedItem != null)
             {
                 //Fitxa fitxaSeleccionada = (Fitxa)lsvFitxes.SelectedItem;
-                Fitxa fitxaSeleccionada = Fitxa.getFitxes()[lsvFitxes.SelectedIndex];
+                Fitxa fitxaSeleccionada = (Fitxa)lsvFitxes.SelectedItem;
                 BitmapImage btmImgFitxaSeleccionada = new BitmapImage(new Uri(fitxaSeleccionada.ImagePath));
                 
                 cbxRepeticions.SelectedValue = fitxaSeleccionada.Repeticions;
@@ -123,7 +124,7 @@ namespace Carcasone.View
             txtTitle.Text = " ";
             lsvExtensions.SelectedIndex = 0;
             imgFitxa.Source = null;
-            txtNotes.Text = " ";
+            txtNotes.Text = "";
             ckbExtraStartingTile.IsChecked = false;
             ckbExtraMonastery.IsChecked = false;
             imgSidesFitxa.Source = null;
@@ -157,8 +158,8 @@ namespace Carcasone.View
             txtTitle.IsEnabled = estaActiu;
             btnImatgeFitxa.IsEnabled = estaActiu;
             lsvExtensions.IsEnabled = estaActiu;
-            btnAddExtension.IsEnabled = estaActiu;
-            btnDeleteExtension.IsEnabled = estaActiu;
+            btnAddExtension.IsEnabled = false;
+            btnDeleteExtension.IsEnabled = estat == Estat.MODIFICACIO && lsvExtensions.SelectedItem != null;
             txtAltaExtension.IsEnabled = estaActiu;
             txtNotes.IsEnabled = estaActiu;
             ckbExtraStartingTile.IsEnabled = estaActiu;
@@ -190,7 +191,7 @@ namespace Carcasone.View
         }
 
         #region addExtensio, removeExtensio, getExtensions
-        public Boolean addExtensio(String novaExtensio)
+        public static Boolean addExtensio(String novaExtensio)
         {
             if (_extensions.Contains(novaExtensio))
             {
@@ -200,14 +201,14 @@ namespace Carcasone.View
             return true;
         }
 
-        public Boolean removeExtensio(String extensio)
+        public static Boolean removeExtensio(String extensio)
         {
-            if (!_extensions.Contains(extensio))
+            if (_extensions.Contains(extensio))
             {
-                return false;
+                _extensions.Remove(extensio);
+                return true;
             }
-            _extensions.Remove(extensio);
-            return true;
+            return false;
         }
 
         public static ObservableCollection<String> getExtensions()
@@ -269,18 +270,17 @@ namespace Carcasone.View
                     Fitxa fitxaEditada = (Fitxa)lsvFitxes.SelectedItem;
 
                     hiHaCanvis = !(
-                    fitxaEditada.Repeticions.Equals((int)cbxRepeticions.SelectedItem) &&
-                    fitxaEditada.Title.Equals(txtTitle.Text) &&
-                    fitxaEditada.Extens.Equals((string)lsvExtensions.SelectedItem) &&
-                    fitxaEditada.Notes.Equals(txtNotes.Text) &&
-                    fitxaEditada.IsMonastery.Equals(ckbExtraMonastery.IsChecked) &&
-                    Fitxa.IsStartingTile.Equals(fitxaEditada) &&
-                    fitxaEditada.ImagePath.Equals(((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri) &&
-                    fitxaEditada.Sides[0].Equals(sideSeleccionat(cbxSide0Fitxa.SelectedIndex)) &&
-                    fitxaEditada.Sides[1].Equals(sideSeleccionat(cbxSide1Fitxa.SelectedIndex)) &&
-                    fitxaEditada.Sides[2].Equals(sideSeleccionat(cbxSide2Fitxa.SelectedIndex)) &&
-                    fitxaEditada.Sides[3].Equals(sideSeleccionat(cbxSide3Fitxa.SelectedIndex))
-                    );
+                        fitxaEditada.Repeticions.Equals((int)cbxRepeticions.SelectedItem) &&
+                        fitxaEditada.Title.Equals(txtTitle.Text) &&
+                        fitxaEditada.Notes.Equals(txtNotes.Text) &&
+                        fitxaEditada.IsMonastery.Equals(ckbExtraMonastery.IsChecked) &&
+                        fitxaEditada.ImagePath.Equals(((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri) &&
+                        fitxaEditada.Sides[0].Equals(sideSeleccionat(cbxSide0Fitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[1].Equals(sideSeleccionat(cbxSide1Fitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[2].Equals(sideSeleccionat(cbxSide2Fitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[3].Equals(sideSeleccionat(cbxSide3Fitxa.SelectedIndex)) &&
+                        fitxaEditada.Extens.Equals((String)lsvExtensions.SelectedItem)
+                        );
                 }
                 if (estat == Estat.MODIFICACIO && hiHaCanvis || estat == Estat.ALTA)
                 {
@@ -314,7 +314,10 @@ namespace Carcasone.View
 
         private void cbxRepeticions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            validarDadesFormulari();
+            if (cbxRepeticions.SelectedItem != null)
+            {
+                validarDadesFormulari();
+            }
         }
 
         private void txtTitle_TextChanged(object sender, TextChangedEventArgs e)
@@ -324,7 +327,12 @@ namespace Carcasone.View
 
         private void lsvExtensions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            validarDadesFormulari();
+            btnDeleteExtension.IsEnabled = lsvExtensions.SelectedItem != null;
+            if (lsvExtensions.SelectedItem != null)
+            {
+                validarDadesFormulari();
+            }
+            
         }
 
         private void txtNotes_TextChanged(object sender, TextChangedEventArgs e)
@@ -339,29 +347,8 @@ namespace Carcasone.View
 
         private void ckbExtraStartingTile_Checked(object sender, RoutedEventArgs e)
         {
+            btnSaveFormulari.IsEnabled = true;
             validarDadesFormulari();
-        }
-
-
-        private async void ckbExtraStartingTile_Unchecked(object sender, RoutedEventArgs e)
-        {
-            /*if (Fitxa.IsStartingTile.Equals((Fitxa)lsvFitxes.SelectedItem))
-            {
-                await dialogStartingTile();
-                ckbExtraStartingTile.IsChecked = true;
-            }*/
-        }
-
-        private async System.Threading.Tasks.Task dialogStartingTile()
-        {
-            ContentDialog dialog = new ContentDialog
-            {
-                Title = "ERROR!!",
-                Content = "The panel cannot be left without a starter tab. If you want to make the change go to another tab and select the Check Starting Tile.",
-                CloseButtonText = "Ok"
-            };
-
-            ContentDialogResult result = await dialog.ShowAsync();
         }
 
         private void cbxSide0Fitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -442,16 +429,36 @@ namespace Carcasone.View
                     {
                         Fitxa.IsStartingTile = fitxaEditada;
                     }
+                    else
+                    {
+                        Fitxa.IsStartingTile = null;
+                    }
                 }
 
-                if (!fitxaEditada.ImagePath.Equals(((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri) ||
-                    !fitxaEditada.Extens.Equals((string)lsvExtensions.SelectedItem))
+                if (Fitxa.IsStartingTile == null)
                 {
-                    //
+                    int randomFitxa;
+                    randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
+
+                    while (fitxaEditada.getCodi() == randomFitxa)
+                    {
+                        randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
+                    }
+
+                    Fitxa.IsStartingTile = Fitxa.getFitxes()[randomFitxa];
                 }
+
+                Fitxa.getFitxes()[fitxaEditada.getCodi()] = fitxaEditada;
+                this.cvs.Source = groups;
+
+                lsvFitxes.SelectedItem = fitxaEditada;
             }
 
             canviEstat(Estat.VIEW);
+            
+
+            //lsvFitxes.ItemsSource = null;
+            //lsvFitxes.ItemsSource = Fitxa.getFitxes();
         }
 
         private async void btnImatgeFitxa_Click(object sender, RoutedEventArgs e)
@@ -508,5 +515,36 @@ namespace Carcasone.View
                 }
             }
         }
+
+        private void txtAltaExtension_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            btnAddExtension.IsEnabled = txtAltaExtension.Text.Length > 0;
+        }
+
+        private void btnAddExtension_Click(object sender, RoutedEventArgs e)
+        {
+            addExtensio(txtAltaExtension.Text);
+            txtAltaExtension.Text = "";
+        }
+
+        private void btnDeleteExtension_Click(object sender, RoutedEventArgs e)
+        {
+            String extensioAEliminar = (String)lsvExtensions.SelectedItem;
+            if (removeExtensio((String)lsvExtensions.SelectedItem))
+            {
+                for (int i = 0; i < Fitxa.getFitxes().Count; i++)
+                {
+                    if (Fitxa.getFitxes()[i].Extens != null)
+                    {
+                        if (Fitxa.getFitxes()[i].Extens.Equals(extensioAEliminar))
+                        {
+                            Fitxa.getFitxes()[i].Extens = null;
+                        }
+                    }
+                }
+            }
+            this.cvs.Source = groups;
+        }
+
     }
 }

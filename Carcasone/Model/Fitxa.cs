@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography;
 
 namespace Carcasone.Model
 {
@@ -16,7 +17,8 @@ namespace Carcasone.Model
         private static Fitxa isStartingTile;
         private static ObservableCollection<Fitxa> _fitxes;
         private static int autonumeric;
-        
+        private static Random rnd = new Random();
+
         private int codi;
         private string title;
         private string imagePath;
@@ -37,6 +39,8 @@ namespace Carcasone.Model
             IsMonastery = isMonastery;
             Extens = extens;
         }
+
+        
 
         public static Fitxa IsStartingTile
         {
@@ -133,7 +137,7 @@ namespace Carcasone.Model
             set 
             {
                 if (value != null && !validaExtensio(value)) throw new Exception("la extensio es obligatoria");
-                extens = value; 
+                extens = value;
             }
         }
 
@@ -176,9 +180,15 @@ namespace Carcasone.Model
                 _fitxes.Add(f3);
                 _fitxes.Add(f4);
 
-                isStartingTile = f3;
+                isStartingTile = getFitxes()[generarRandom(0, getFitxes().Count - 1)];
+                
             }
             return _fitxes;
+        }
+
+        public static int generarRandom(int minValue, int maxValue)
+        {
+            return rnd.Next(minValue, maxValue);
         }
 
         public static bool addFitxa(Fitxa novaFitxa)
@@ -204,8 +214,6 @@ namespace Carcasone.Model
         {
             return Codi;
         }
-
-
 
         #region validacions
         public static bool validaCodi(int codi)
@@ -238,6 +246,7 @@ namespace Carcasone.Model
         {
             return extensio.Length > 0;
         }
+        #endregion validacions
 
         public override bool Equals(object obj)
         {
@@ -250,7 +259,7 @@ namespace Carcasone.Model
             return -1172468304 + Codi.GetHashCode();
         }
 
-        #endregion validacions
+        
 
     }
 }
