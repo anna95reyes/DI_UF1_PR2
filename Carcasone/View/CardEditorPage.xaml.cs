@@ -399,10 +399,9 @@ namespace Carcasone.View
                 Fitxa.addFitxa(novaFitxa);
                 lsvFitxes.SelectedItem = novaFitxa;
 
-                //lsvFitxes.ItemsSource = Fitxa.getFitxes();
-                //lsvFitxes.ItemsSource = null;
-                //IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
-                //this.cvs.Source = groups;
+                this.cvs.Source = groups;
+
+                lsvFitxes.SelectedItem = novaFitxa;
 
             }
             else
@@ -505,11 +504,9 @@ namespace Carcasone.View
                     if (Fitxa.removeFitxa(fitxaAElimnar))
                     {
                         netejarFormulari();
-                        //lsvFitxes.ItemsSource = Fitxa.getFitxes();
-                        //lsvFitxes.ItemsSource = null;
-                        
-                        //IEnumerable<IGrouping<String, Fitxa>> groups = from c in Fitxa.getFitxes() group c by c.Extens;
-                        //this.cvs.Source = groups;
+                        this.cvs.Source = groups;
+
+                        lsvFitxes.SelectedItem = null;
                     }
 
                 }
