@@ -8,9 +8,9 @@ namespace Carcasone.Model
 {
     public enum PosType
     {
-        TOP, 
-        RIGHT, 
-        BOTTOM, 
-        LEFT    
+        TOP, //adalt
+        RIGHT, //dreta
+        BOTTOM, //abaix
+        LEFT //esquerra
     }
 }

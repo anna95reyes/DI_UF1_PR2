@@ -50,10 +50,6 @@ namespace Carcasone.View
         {
             txbTitlePage.Text = pageName;
 
-            //Es el mateix que fer: lsvFitxes.ItemsSource = Fitxa.getFitxes(); pero per poder agrupar
-            //lsvFitxes.ItemsSource = Fitxa.getFitxes();
-            //lsvFitxes.SelectedIndex = 0;
-
             groups = from c in Fitxa.getFitxes() group c by c.Extens;
             this.cvs.Source = groups;
 
@@ -63,10 +59,10 @@ namespace Carcasone.View
             lsvExtensions.ItemsSource = CardEditorPage.getExtensions();
             lsvExtensions.SelectedIndex = 0;
 
-            cbxSide0Fitxa.ItemsSource = llistaImatgesSides();
-            cbxSide1Fitxa.ItemsSource = llistaImatgesSides();
-            cbxSide2Fitxa.ItemsSource = llistaImatgesSides();
-            cbxSide3Fitxa.ItemsSource = llistaImatgesSides();
+            cbxSideTopFitxa.ItemsSource = llistaImatgesSides();
+            cbxSideRightFitxa.ItemsSource = llistaImatgesSides();
+            cbxSideBottomFitxa.ItemsSource = llistaImatgesSides();
+            cbxSideLeftFitxa.ItemsSource = llistaImatgesSides();
             
             canviEstat(Estat.VIEW);
         }
@@ -99,7 +95,6 @@ namespace Carcasone.View
         {
             if (lsvFitxes.SelectedItem != null)
             {
-                //Fitxa fitxaSeleccionada = (Fitxa)lsvFitxes.SelectedItem;
                 Fitxa fitxaSeleccionada = (Fitxa)lsvFitxes.SelectedItem;
                 BitmapImage btmImgFitxaSeleccionada = new BitmapImage(new Uri(fitxaSeleccionada.ImagePath));
                 
@@ -111,10 +106,11 @@ namespace Carcasone.View
                 ckbExtraStartingTile.IsChecked = (Fitxa.IsStartingTile.getCodi() == fitxaSeleccionada.getCodi())? true : false;
                 ckbExtraMonastery.IsChecked = fitxaSeleccionada.IsMonastery;
                 imgSidesFitxa.Source = btmImgFitxaSeleccionada;
-                cbxSide0Fitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, 0);
-                cbxSide1Fitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, 1);
-                cbxSide2Fitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, 2);
-                cbxSide3Fitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, 3);
+
+                cbxSideTopFitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, PosType.TOP);
+                cbxSideRightFitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, PosType.RIGHT);
+                cbxSideBottomFitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, PosType.BOTTOM);
+                cbxSideLeftFitxa.SelectedIndex = sidesSeleccionat(fitxaSeleccionada, PosType.LEFT);
             }
         }
 
@@ -128,24 +124,23 @@ namespace Carcasone.View
             ckbExtraStartingTile.IsChecked = false;
             ckbExtraMonastery.IsChecked = false;
             imgSidesFitxa.Source = null;
-            cbxSide0Fitxa.SelectedIndex = 2;
-            cbxSide1Fitxa.SelectedIndex = 2;
-            cbxSide2Fitxa.SelectedIndex = 2;
-            cbxSide3Fitxa.SelectedIndex = 2;
+            cbxSideTopFitxa.SelectedIndex = 2;
+            cbxSideRightFitxa.SelectedIndex = 2;
+            cbxSideBottomFitxa.SelectedIndex = 2;
+            cbxSideLeftFitxa.SelectedIndex = 2;
         }
 
-
-        public int sidesSeleccionat(Fitxa fitxaSeleccionada, int pos)
+        public int sidesSeleccionat(Fitxa fitxaSeleccionada, PosType pos)
         {
-            if (fitxaSeleccionada.Sides[pos].Equals(SideType.PATH))
+            if (fitxaSeleccionada.Sides[(int)pos].Equals(SideType.PATH))
             {
                 return 0;
             }
-            else if (fitxaSeleccionada.Sides[pos].Equals(SideType.CASTLE))
+            else if (fitxaSeleccionada.Sides[(int)pos].Equals(SideType.CASTLE))
             {
                 return 1;
             }
-            else if (fitxaSeleccionada.Sides[pos].Equals(SideType.FIELD))
+            else if (fitxaSeleccionada.Sides[(int)pos].Equals(SideType.FIELD))
             {
                 return 2;
             }
@@ -164,14 +159,13 @@ namespace Carcasone.View
             txtNotes.IsEnabled = estaActiu;
             ckbExtraStartingTile.IsEnabled = estaActiu;
             ckbExtraMonastery.IsEnabled = estaActiu;
-            cbxSide0Fitxa.IsEnabled = estaActiu;
-            cbxSide1Fitxa.IsEnabled = estaActiu;
-            cbxSide2Fitxa.IsEnabled = estaActiu;
-            cbxSide3Fitxa.IsEnabled = estaActiu;
+            cbxSideTopFitxa.IsEnabled = estaActiu;
+            cbxSideRightFitxa.IsEnabled = estaActiu;
+            cbxSideBottomFitxa.IsEnabled = estaActiu;
+            cbxSideLeftFitxa.IsEnabled = estaActiu;
             btnCancelFormulari.IsEnabled = false;
             btnSaveFormulari.IsEnabled = false;
         }
-
         private ObservableCollection<Image> llistaImatgesSides()
         {
             imgSides = new ObservableCollection<Image>();
@@ -250,8 +244,8 @@ namespace Carcasone.View
                 Fitxa.validaTitle(txtTitle.Text) &&
                 lsvExtensions.SelectedItem != null &&
                 imgFitxa.Source != null &&
-                cbxSide0Fitxa.SelectedItem != null && cbxSide1Fitxa.SelectedItem != null && 
-                cbxSide2Fitxa.SelectedItem != null && cbxSide3Fitxa.SelectedItem != null)
+                cbxSideTopFitxa.SelectedItem != null && cbxSideRightFitxa.SelectedItem != null && 
+                cbxSideBottomFitxa.SelectedItem != null && cbxSideLeftFitxa.SelectedItem != null)
             {
                 formulariValid = true;
             }
@@ -275,12 +269,14 @@ namespace Carcasone.View
                         fitxaEditada.Notes.Equals(txtNotes.Text) &&
                         fitxaEditada.IsMonastery.Equals(ckbExtraMonastery.IsChecked) &&
                         fitxaEditada.ImagePath.Equals(((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri) &&
-                        fitxaEditada.Sides[0].Equals(sideSeleccionat(cbxSide0Fitxa.SelectedIndex)) &&
-                        fitxaEditada.Sides[1].Equals(sideSeleccionat(cbxSide1Fitxa.SelectedIndex)) &&
-                        fitxaEditada.Sides[2].Equals(sideSeleccionat(cbxSide2Fitxa.SelectedIndex)) &&
-                        fitxaEditada.Sides[3].Equals(sideSeleccionat(cbxSide3Fitxa.SelectedIndex)) &&
+
+                        fitxaEditada.Sides[(int)PosType.TOP].Equals(sideSeleccionat(cbxSideTopFitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[(int)PosType.RIGHT].Equals(sideSeleccionat(cbxSideRightFitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[(int)PosType.BOTTOM].Equals(sideSeleccionat(cbxSideBottomFitxa.SelectedIndex)) &&
+                        fitxaEditada.Sides[(int)PosType.LEFT].Equals(sideSeleccionat(cbxSideLeftFitxa.SelectedIndex)) &&
                         fitxaEditada.Extens.Equals((String)lsvExtensions.SelectedItem)
                         );
+
                 }
                 if (estat == Estat.MODIFICACIO && hiHaCanvis || estat == Estat.ALTA)
                 {
@@ -351,22 +347,22 @@ namespace Carcasone.View
             validarDadesFormulari();
         }
 
-        private void cbxSide0Fitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxSideTopFitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             validarDadesFormulari();
         }
 
-        private void cbxSide1Fitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxSideRightFitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             validarDadesFormulari();
         }
 
-        private void cbxSide2Fitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxSideBottomFitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             validarDadesFormulari();
         }
 
-        private void cbxSide3Fitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxSideLeftFitxa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             validarDadesFormulari();
         }
@@ -382,10 +378,10 @@ namespace Carcasone.View
             {
                 SideType[] sides = new SideType[4];
 
-                sides[0] = sideSeleccionat(cbxSide0Fitxa.SelectedIndex);
-                sides[1] = sideSeleccionat(cbxSide1Fitxa.SelectedIndex);
-                sides[2] = sideSeleccionat(cbxSide2Fitxa.SelectedIndex);
-                sides[3] = sideSeleccionat(cbxSide3Fitxa.SelectedIndex);
+                sides[(int)PosType.TOP] = sideSeleccionat(cbxSideTopFitxa.SelectedIndex);
+                sides[(int)PosType.RIGHT] = sideSeleccionat(cbxSideRightFitxa.SelectedIndex);
+                sides[(int)PosType.BOTTOM] = sideSeleccionat(cbxSideBottomFitxa.SelectedIndex);
+                sides[(int)PosType.LEFT] = sideSeleccionat(cbxSideLeftFitxa.SelectedIndex);
 
                 Fitxa novaFitxa = new Fitxa(txtTitle.Text, ((BitmapImage)imgFitxa.Source).UriSource.AbsoluteUri, (int)cbxRepeticions.SelectedItem,
                                             txtNotes.Text, sides, (bool)ckbExtraMonastery.IsChecked, (string)lsvExtensions.SelectedItem);
@@ -417,10 +413,11 @@ namespace Carcasone.View
                 {
                     fitxaEditada.IsMonastery = (bool)ckbExtraMonastery.IsChecked;
                 }
-                fitxaEditada.Sides[0] = sideSeleccionat(cbxSide0Fitxa.SelectedIndex);
-                fitxaEditada.Sides[1] = sideSeleccionat(cbxSide1Fitxa.SelectedIndex);
-                fitxaEditada.Sides[2] = sideSeleccionat(cbxSide2Fitxa.SelectedIndex);
-                fitxaEditada.Sides[3] = sideSeleccionat(cbxSide3Fitxa.SelectedIndex);
+
+                fitxaEditada.Sides[(int)PosType.TOP] = sideSeleccionat(cbxSideTopFitxa.SelectedIndex);
+                fitxaEditada.Sides[(int)PosType.RIGHT] = sideSeleccionat(cbxSideRightFitxa.SelectedIndex);
+                fitxaEditada.Sides[(int)PosType.BOTTOM] = sideSeleccionat(cbxSideBottomFitxa.SelectedIndex);
+                fitxaEditada.Sides[(int)PosType.LEFT] = sideSeleccionat(cbxSideLeftFitxa.SelectedIndex);
 
                 if (ckbExtraStartingTile.IsChecked != null)
                 {
@@ -437,14 +434,20 @@ namespace Carcasone.View
                 if (Fitxa.IsStartingTile == null)
                 {
                     int randomFitxa;
-                    randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
 
-                    while (fitxaEditada.getCodi() == randomFitxa)
+                    if (Fitxa.getFitxes().Count > 1)
                     {
-                        randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
-                    }
+                        missatgeAvisCanviIsStartingTile();
 
-                    Fitxa.IsStartingTile = Fitxa.getFitxes()[randomFitxa];
+                        randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
+
+                        while (fitxaEditada.getCodi() == randomFitxa)
+                        {
+                            randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
+                        }
+
+                        Fitxa.IsStartingTile = Fitxa.getFitxes()[randomFitxa];
+                    }
                 }
 
                 Fitxa.getFitxes()[fitxaEditada.getCodi()] = fitxaEditada;
@@ -454,10 +457,18 @@ namespace Carcasone.View
             }
 
             canviEstat(Estat.VIEW);
-            
+        }
 
-            //lsvFitxes.ItemsSource = null;
-            //lsvFitxes.ItemsSource = Fitxa.getFitxes();
+        private async System.Threading.Tasks.Task missatgeAvisCanviIsStartingTile()
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "INFORMACIO",
+                Content = "Al treure la fitxa d'inici, automaticament la carta buscara una alta carta per posar-la d'inici.",
+                CloseButtonText = "Ok"
+            };
+
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
         private async void btnImatgeFitxa_Click(object sender, RoutedEventArgs e)

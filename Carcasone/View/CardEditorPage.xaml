@@ -173,14 +173,14 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="imgSidesFitxa" Grid.Row="1" Grid.Column="1" Height="250" Width="250" Margin="10"/>
-                <ComboBox x:Name="cbxSide0Fitxa" Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                          Height="50" Width="80" SelectionChanged="cbxSide0Fitxa_SelectionChanged"></ComboBox>
-                <ComboBox x:Name="cbxSide1Fitxa" Margin="5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                          Height="50" Width="80" SelectionChanged="cbxSide1Fitxa_SelectionChanged"></ComboBox>
-                <ComboBox x:Name="cbxSide2Fitxa" Margin="5" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                          Height="50" Width="80" SelectionChanged="cbxSide2Fitxa_SelectionChanged"></ComboBox>
-                <ComboBox x:Name="cbxSide3Fitxa" Margin="5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                          Height="50" Width="80" SelectionChanged="cbxSide3Fitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSideTopFitxa" Margin="5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                          Height="50" Width="80" SelectionChanged="cbxSideTopFitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSideRightFitxa" Margin="5" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                          Height="50" Width="80" SelectionChanged="cbxSideRightFitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSideBottomFitxa" Margin="5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                          Height="50" Width="80" SelectionChanged="cbxSideBottomFitxa_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="cbxSideLeftFitxa" Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                          Height="50" Width="80" SelectionChanged="cbxSideLeftFitxa_SelectionChanged"></ComboBox>
             </Grid>
 
             <!-- Fila botons -->

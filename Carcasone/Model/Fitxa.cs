@@ -148,31 +148,31 @@ namespace Carcasone.Model
                 _fitxes = new ObservableCollection<Fitxa>();
 
                 SideType[] s1 = new SideType[4];
-                s1[0] = SideType.FIELD;
-                s1[1] = SideType.CASTLE;
-                s1[2] = SideType.FIELD;
-                s1[3] = SideType.PATH;
+                s1[(int)PosType.TOP] = SideType.CASTLE;
+                s1[(int)PosType.RIGHT] = SideType.FIELD;
+                s1[(int)PosType.BOTTOM] = SideType.PATH;
+                s1[(int)PosType.LEFT] = SideType.FIELD;
                 Fitxa f1 = new Fitxa("Castle Wall Entry", "ms-appx:///Assets/tiles/CastleWallEntry0.png", 4, "", s1, false, CardEditorPage.getExtensions()[0]);
 
                 SideType[] s2 = new SideType[4];
-                s2[0] = SideType.FIELD;
-                s2[1] = SideType.FIELD;
-                s2[2] = SideType.FIELD;
-                s2[3] = SideType.PATH;
+                s2[(int)PosType.TOP] = SideType.FIELD;
+                s2[(int)PosType.RIGHT] = SideType.FIELD;
+                s2[(int)PosType.BOTTOM] = SideType.PATH;
+                s2[(int)PosType.LEFT] = SideType.FIELD;
                 Fitxa f2 = new Fitxa("Monastery Road", "ms-appx:///Assets/tiles/MonasteryRoad0.png", 2, "", s2, true, CardEditorPage.getExtensions()[0]);
 
                 SideType[] s3 = new SideType[4];
-                s3[0] = SideType.FIELD;
-                s3[1] = SideType.FIELD;
-                s3[2] = SideType.FIELD;
-                s3[3] = SideType.FIELD;
+                s3[(int)PosType.TOP] = SideType.FIELD;
+                s3[(int)PosType.RIGHT] = SideType.FIELD;
+                s3[(int)PosType.BOTTOM] = SideType.FIELD;
+                s3[(int)PosType.LEFT] = SideType.FIELD;
                 Fitxa f3 = new Fitxa("Monastery", "ms-appx:///Assets/tiles/Monastery0.png", 3, "", s3, true, CardEditorPage.getExtensions()[1]);
 
                 SideType[] s4 = new SideType[4];
-                s4[0] = SideType.FIELD;
-                s4[1] = SideType.PATH;
-                s4[2] = SideType.FIELD;
-                s4[3] = SideType.PATH;
+                s4[(int)PosType.TOP] = SideType.PATH;
+                s4[(int)PosType.RIGHT] = SideType.FIELD;
+                s4[(int)PosType.BOTTOM] = SideType.PATH;
+                s4[(int)PosType.LEFT] = SideType.FIELD;
                 Fitxa f4 = new Fitxa("Road", "ms-appx:///Assets/tiles/Road0.png", 1, "", s4, false, CardEditorPage.getExtensions()[1]);
 
                 _fitxes.Add(f1);
