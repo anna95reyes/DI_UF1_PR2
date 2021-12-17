@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,6 +25,14 @@ namespace Carcasone.View
     {
         public String pageName = "Carcassone Game";
 
+        public enum Estat
+        {
+            NEWGAME,
+            GAME,
+            HELP
+        }
+        Estat estat = Estat.NEWGAME;
+
         public GamePage()
         {
             this.InitializeComponent();
@@ -32,6 +41,65 @@ namespace Carcasone.View
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             txbTitlePage.Text = pageName;
+            canviEstat(Estat.GAME);
+        }
+
+        private void canviEstat(Estat estatNou)
+        {
+            estat = estatNou;
+            if (estat == Estat.NEWGAME)
+            {
+                menuGame.Visibility = Visibility.Collapsed;
+                gridNewGame.Visibility = Visibility.Visible;
+                grdGame.Visibility = menuGame.Visibility;
+                grdHelp.Visibility = Visibility.Collapsed;
+                grdPagina.Background = new SolidColorBrush(Colors.Transparent);
+
+            }
+            else if (estat == Estat.GAME)
+            {
+                menuGame.Visibility = Visibility.Visible;
+                gridNewGame.Visibility = Visibility.Collapsed;
+                grdGame.Visibility = menuGame.Visibility;
+                grdHelp.Visibility = Visibility.Collapsed;
+                grdPagina.Background = new SolidColorBrush(Colors.LightGreen);
+            }
+            else if (estat == Estat.HELP)
+            {
+                menuGame.Visibility = Visibility.Collapsed;
+                gridNewGame.Visibility = Visibility.Collapsed;
+                grdGame.Visibility = menuGame.Visibility;
+                grdHelp.Visibility = Visibility.Visible;
+                grdPagina.Background = new SolidColorBrush(Colors.LightGreen);
+            }
+        }
+
+        private void menuRestartGame_Click(object sender, RoutedEventArgs e)
+        {
+            canviEstat(Estat.NEWGAME);
+        }
+
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void menuCntlQ_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+        }
+
+        private void menuHelp_Click(object sender, RoutedEventArgs e)
+        {
+            canviEstat(Estat.HELP);
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            canviEstat(Estat.GAME);
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            canviEstat(Estat.GAME);
         }
     }
 }

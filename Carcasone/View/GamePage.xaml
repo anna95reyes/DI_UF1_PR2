@@ -4,16 +4,71 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Carcasone.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
-    <Grid>
+    
+    
+    <Grid x:Name="grdPagina">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txbTitlePage" Grid.Row="0" Margin="20" FontSize="30" FontWeight="Bold"></TextBlock>
+        <Windows10version1809:MenuBar x:Name="menuGame" Grid.Row="0" Background="LightGray" Visibility="Visible">
+            <MenuBarItem Title="Game">
+                <MenuFlyoutItem x:Name="menuRestartGame" Text="Restart game" Click="menuRestartGame_Click"/>
+                <MenuFlyoutItem x:Name="menuExit" Text="Exit" Click="menuExit_Click">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator x:Name="menuCntlQ" Key="Q" Modifiers="Control" Invoked="menuCntlQ_Invoked"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+            </MenuBarItem>
+            <MenuBarItem Title="Help">
+                <MenuFlyoutItem x:Name="menuHelp" Text="About" Click="menuHelp_Click"/>
+            </MenuBarItem>
+        </Windows10version1809:MenuBar>
+        <TextBlock x:Name="txbTitlePage" Grid.Row="1" Margin="20" FontSize="30" FontWeight="Bold"></TextBlock>
+        <Grid x:Name="gridNewGame" Grid.Row="2" BorderBrush="Black" BorderThickness="1 0 1 0" Height="350" Width="350" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 0 1">
+                <TextBlock Text="New Game?" FontSize="20" Margin="5"/>
+            </Border>
+            <Grid Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel  Grid.Row="0" Orientation="Vertical" Margin="0 20">
+                    <RadioButton x:Name="rdbPlayer2" Content="2 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
+                    <RadioButton x:Name="rdbPlayer3" Content="3 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
+                    <RadioButton x:Name="rdbPlayer4" Content="4 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
+                </StackPanel>
+                <Button x:Name="btnStart" Grid.Row="1" Content="Start" FontSize="20" Margin="0 20 0 0" Click="btnStart_Click"/>
+            </Grid>
+            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="0 1 0 1"/>
+        </Grid>
+        <Grid x:Name="grdHelp" Grid.Row="2" Visibility="Collapsed" Margin="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Rules" FontSize="80" Grid.Row="0" Margin="5" FontWeight="Bold"/>
+            <TextBlock FontSize="40" Grid.Row="1" Margin="5"><Bold>·</Bold> Tancar castell: 2 punts per casella + 1 punt per escut.</TextBlock>
+            <TextBlock FontSize="40" Grid.Row="2" Margin="5"><Bold>·</Bold> Tancar camí: 1 punt per casella.</TextBlock>
+            <Button x:Name="btnOK" Grid.Row="3" Content="OK" VerticalAlignment="Center" HorizontalAlignment="Right"
+                    FontSize="40" Click="btnOK_Click"></Button>
+        </Grid>
+        <Grid x:Name="grdGame" Grid.Row="2" Visibility="Visible">
+            <TextBlock Text="bbbb" FontSize="40"/>
+        </Grid>
     </Grid>
 </Page>
