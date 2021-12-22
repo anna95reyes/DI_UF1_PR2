@@ -67,8 +67,28 @@
             <Button x:Name="btnOK" Grid.Row="3" Content="OK" VerticalAlignment="Center" HorizontalAlignment="Right"
                     FontSize="40" Click="btnOK_Click"></Button>
         </Grid>
-        <Grid x:Name="grdGame" Grid.Row="2" Visibility="Visible">
-            <TextBlock Text="bbbb" FontSize="40"/>
-        </Grid>
+        <RelativePanel x:Name="rvpGame" Grid.Row="2" Visibility="Visible">
+            <local:UIFitxaMapa x:Name="uiFitxaMapaStarting"
+                            RelativePanel.AlignHorizontalCenterWithPanel="True"
+                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
+            <Grid Width="400" Height="200" Background="White" RelativePanel.AlignBottomWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnRotateLeft" Grid.Column="0" HorizontalAlignment="Right">
+                    <Image Source="/Assets/icons/icons8-rotate-60.png" Height="40"/>
+                </Button>
+                <local:UIFitxaMapa x:Name="uiNextFitxaMapa" Grid.Column="1"
+                            RelativePanel.AlignHorizontalCenterWithPanel="True"
+                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                <Button x:Name="btnRotateRight" Grid.Column="2">
+                    <Image Source="/Assets/icons/icons8-reboot-60.png" Height="40"/>
+                </Button>
+
+            </Grid>
+        </RelativePanel>
     </Grid>
 </Page>

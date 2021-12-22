@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Carcasone.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace Carcasone.View
         {
             txbTitlePage.Text = pageName;
             canviEstat(Estat.GAME);
+            uiFitxaMapaStarting.LaFitxaMapa = FitxaMapa.getFitxesMapa()[0];
         }
 
         private void canviEstat(Estat estatNou)
@@ -51,7 +53,7 @@ namespace Carcasone.View
             {
                 menuGame.Visibility = Visibility.Collapsed;
                 gridNewGame.Visibility = Visibility.Visible;
-                grdGame.Visibility = menuGame.Visibility;
+                rvpGame.Visibility = menuGame.Visibility;
                 grdHelp.Visibility = Visibility.Collapsed;
                 grdPagina.Background = new SolidColorBrush(Colors.Transparent);
 
@@ -60,7 +62,7 @@ namespace Carcasone.View
             {
                 menuGame.Visibility = Visibility.Visible;
                 gridNewGame.Visibility = Visibility.Collapsed;
-                grdGame.Visibility = menuGame.Visibility;
+                rvpGame.Visibility = menuGame.Visibility;
                 grdHelp.Visibility = Visibility.Collapsed;
                 grdPagina.Background = new SolidColorBrush(Colors.LightGreen);
             }
@@ -68,7 +70,7 @@ namespace Carcasone.View
             {
                 menuGame.Visibility = Visibility.Collapsed;
                 gridNewGame.Visibility = Visibility.Collapsed;
-                grdGame.Visibility = menuGame.Visibility;
+                rvpGame.Visibility = menuGame.Visibility;
                 grdHelp.Visibility = Visibility.Visible;
                 grdPagina.Background = new SolidColorBrush(Colors.LightGreen);
             }
@@ -81,10 +83,17 @@ namespace Carcasone.View
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
+            CloseApp();
         }
 
         private void menuCntlQ_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
+            CloseApp();
+        }
+
+        public void CloseApp()
+        {
+            Application.Current.Exit();
         }
 
         private void menuHelp_Click(object sender, RoutedEventArgs e)
@@ -101,5 +110,6 @@ namespace Carcasone.View
         {
             canviEstat(Estat.GAME);
         }
+
     }
 }

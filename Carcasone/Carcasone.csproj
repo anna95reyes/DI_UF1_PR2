@@ -137,6 +137,9 @@
     <Compile Include="View\UICardRepSides.xaml.cs">
       <DependentUpon>UICardRepSides.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UIFitxaMapa.xaml.cs">
+      <DependentUpon>UIFitxaMapa.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -306,6 +309,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\UICardRepSides.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UIFitxaMapa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

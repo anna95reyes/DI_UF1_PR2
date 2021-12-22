@@ -103,7 +103,7 @@ namespace Carcasone.View
                 lsvExtensions.SelectedValue = fitxaSeleccionada.Extens;
                 imgFitxa.Source = btmImgFitxaSeleccionada;
                 txtNotes.Text = fitxaSeleccionada.Notes;
-                ckbExtraStartingTile.IsChecked = (Fitxa.IsStartingTile.getCodi() == fitxaSeleccionada.getCodi())? true : false;
+                ckbExtraStartingTile.IsChecked = (Fitxa.StartingTile.getCodi() == fitxaSeleccionada.getCodi())? true : false;
                 ckbExtraMonastery.IsChecked = fitxaSeleccionada.IsMonastery;
                 imgSidesFitxa.Source = btmImgFitxaSeleccionada;
 
@@ -389,7 +389,7 @@ namespace Carcasone.View
                 {
                     if ((bool)ckbExtraStartingTile.IsChecked == true)
                     {
-                        Fitxa.IsStartingTile = novaFitxa;
+                        Fitxa.StartingTile = novaFitxa;
                     }
                 }
                 Fitxa.addFitxa(novaFitxa);
@@ -423,15 +423,15 @@ namespace Carcasone.View
                 {
                     if ((bool)ckbExtraStartingTile.IsChecked == true)
                     {
-                        Fitxa.IsStartingTile = fitxaEditada;
+                        Fitxa.StartingTile = fitxaEditada;
                     }
                     else
                     {
-                        Fitxa.IsStartingTile = null;
+                        Fitxa.StartingTile = null;
                     }
                 }
 
-                if (Fitxa.IsStartingTile == null)
+                if (Fitxa.StartingTile == null)
                 {
                     int randomFitxa;
 
@@ -446,7 +446,7 @@ namespace Carcasone.View
                             randomFitxa = Fitxa.generarRandom(0, Fitxa.getFitxes().Count - 1);
                         }
 
-                        Fitxa.IsStartingTile = Fitxa.getFitxes()[randomFitxa];
+                        Fitxa.StartingTile = Fitxa.getFitxes()[randomFitxa];
                     }
                 }
 

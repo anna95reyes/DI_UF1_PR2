@@ -14,7 +14,7 @@ namespace Carcasone.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private static Fitxa isStartingTile;
+        private static Fitxa startingTile;
         private static ObservableCollection<Fitxa> _fitxes;
         private static int autonumeric;
         private static Random rnd = new Random();
@@ -42,15 +42,15 @@ namespace Carcasone.Model
 
         
 
-        public static Fitxa IsStartingTile
+        public static Fitxa StartingTile
         {
             get
             {
-                return isStartingTile;
+                return startingTile;
             }
             set
             {
-                isStartingTile = value;
+                startingTile = value;
             }
         }
         private int Codi {
@@ -180,7 +180,7 @@ namespace Carcasone.Model
                 _fitxes.Add(f3);
                 _fitxes.Add(f4);
 
-                isStartingTile = getFitxes()[generarRandom(0, getFitxes().Count - 1)];
+                startingTile = getFitxes()[generarRandom(0, getFitxes().Count - 1)];
                 
             }
             return _fitxes;
