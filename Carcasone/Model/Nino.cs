@@ -18,17 +18,62 @@ namespace Carcasone.Model
         private int player;
         private string imagePath;
 
-        public Nino(PosType pos, int player, string imagePath)
+        public Nino(PosType pos, int player)
         {
             Pos = pos;
             Player = player;
-            ImagePath = imagePath;
+            ImagePath = imatgeNino(Player);
+        }
+
+        public Nino(int player)
+        {
+            Player = player;
+            ImagePath = imatgeNino(Player);
         }
 
         public PosType Pos { get => pos; set => pos = value; }
-        public int Player { get => player; set => player = value; }
+        public int Player
+        {
+            get
+            {
+                return player;
+            }
+            set
+            {
+                if (!validaPlayer(value)) throw new Exception("Player incorrecte");
+                player = value;
+            }
+        }
+    
         public string ImagePath { get => imagePath; set => imagePath = value; }
 
+        private String imatgeNino(int player)
+        {
+            String uri = "";
+            if (player == 1)
+            {
+                uri = "ms-appx:///Assets/meeple/blue_meeple.png";
+            }
+            else if (player == 2)
+            {
+                uri = "ms-appx:///Assets/meeple/red_meeple.png";
+            }
+            else if (player == 3)
+            {
+                uri = "ms-appx:///Assets/meeple/green_meeple.png";
+            }
+            else if (player == 4)
+            {
+                uri = "ms-appx:///Assets/meeple/yellow_meeple.png";
+            }
+            return uri;
+        }
 
+        #region validacions
+        public static bool validaPlayer(int player)
+        {
+            return player >= 1 && player <=4;
+        }
+        #endregion validacions
     }
 }

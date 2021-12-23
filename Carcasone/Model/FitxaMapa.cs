@@ -65,10 +65,35 @@ namespace Carcasone.Model
             {
                 _fitxesMapa = new ObservableCollection<FitxaMapa>();
 
-                FitxaMapa fm1 = new FitxaMapa(Fitxa.StartingTile, new Point(0,0), 0, Fitxa.StartingTile.Sides);
-                _fitxesMapa.Add(fm1);
+                for (int i = 0; i < Fitxa.getFitxes().Count; i++)
+                {
+                    for (int j = 0; j < Fitxa.getFitxes()[i].Repeticions; j++)
+                    {
+                        FitxaMapa fm = new FitxaMapa(Fitxa.getFitxes()[i], new Point(0, 0), 0, Fitxa.getFitxes()[i].Sides);
+                        _fitxesMapa.Add(fm);
+                    }
+                    
+                }
             }
             return _fitxesMapa;
+        }
+
+        public static FitxaMapa fitxaMapaStarting()
+        {
+            int i = 0;
+            FitxaMapa fm = null;
+
+            while (i < getFitxesMapa().Count && !getFitxesMapa()[i].Fitxa.Equals(Fitxa.StartingTile))
+            {
+                i++;
+            }
+
+            if (getFitxesMapa()[i].Fitxa.Equals(Fitxa.StartingTile))
+            {
+                fm = _fitxesMapa[i];
+            }
+
+            return fm;
         }
     }
 }

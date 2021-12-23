@@ -46,9 +46,9 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel  Grid.Row="0" Orientation="Vertical" Margin="0 20">
-                    <RadioButton x:Name="rdbPlayer2" Content="2 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
-                    <RadioButton x:Name="rdbPlayer3" Content="3 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
-                    <RadioButton x:Name="rdbPlayer4" Content="4 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16"/>
+                    <RadioButton x:Name="rdbPlayer2" Content="2 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16" Tag="2" Checked="rdbPlayers_Checked"/>
+                    <RadioButton x:Name="rdbPlayer3" Content="3 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16" Tag="3" Checked="rdbPlayers_Checked"/>
+                    <RadioButton x:Name="rdbPlayer4" Content="4 Players" GroupName="rdbGruopPlayers" Margin="0 5" FontSize="16" Tag="4" Checked="rdbPlayers_Checked"/>
                 </StackPanel>
                 <Button x:Name="btnStart" Grid.Row="1" Content="Start" FontSize="20" Margin="0 20 0 0" Click="btnStart_Click"/>
             </Grid>
@@ -68,27 +68,49 @@
                     FontSize="40" Click="btnOK_Click"></Button>
         </Grid>
         <RelativePanel x:Name="rvpGame" Grid.Row="2" Visibility="Visible">
-            <local:UIFitxaMapa x:Name="uiFitxaMapaStarting"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
-            <Grid Width="400" Height="200" Background="White" RelativePanel.AlignBottomWithPanel="True"
-                       RelativePanel.AlignHorizontalCenterWithPanel="True">
+            <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" 
+                          IsVerticalScrollChainingEnabled="False" IsHorizontalScrollChainingEnabled="False"
+                          HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                          RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                <RelativePanel>
+                    <local:UIFitxaMapa x:Name="uiFitxaMapaStarting"
+                                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                       RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                </RelativePanel>
+            </ScrollViewer>
+            <Grid RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnRotateLeft" Grid.Column="0" HorizontalAlignment="Right">
-                    <Image Source="/Assets/icons/icons8-rotate-60.png" Height="40"/>
-                </Button>
-                <local:UIFitxaMapa x:Name="uiNextFitxaMapa" Grid.Column="1"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                <Button x:Name="btnRotateRight" Grid.Column="2">
-                    <Image Source="/Assets/icons/icons8-reboot-60.png" Height="40"/>
-                </Button>
-
+                <Button x:Name="btnCancel" Content="Cancel" FontSize="26" Grid.Column="0" Margin="0 0 30 0" Visibility="Collapsed"/>
+                <Button x:Name="btnOk" Content="Ok" FontSize="26"  Grid.Column="2" Margin="30 0 40 0" Visibility="Collapsed"/>
+                <Grid x:Name="grdFitxaAInserir" Width="400" Height="200" Background="White"  Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnRotateLeft" Grid.Column="0" HorizontalAlignment="Right">
+                        <Image Source="/Assets/icons/icons8-rotate-60.png" Height="40"/>
+                    </Button>
+                    <local:UIFitxaMapa x:Name="uiNextFitxaMapa" Grid.Column="1"
+                                    RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                    <Button x:Name="btnRotateRight" Grid.Column="2">
+                        <Image Source="/Assets/icons/icons8-reboot-60.png" Height="40"/>
+                    </Button>
+                </Grid>
             </Grid>
+            <local:UIPlayer x:Name="uiPlayer1" Tag="1" RelativePanel.AlignTopWithPanel="True" 
+                                                       RelativePanel.AlignLeftWithPanel="True" Margin="60 20"/>
+            <local:UIPlayer x:Name="uiPlayer2" Tag="2" RelativePanel.AlignTopWithPanel="True" 
+                                                       RelativePanel.AlignRightWithPanel="True"  Margin="60 20"/>
+            <local:UIPlayer x:Name="uiPlayer3" Tag="3" RelativePanel.AlignBottomWithPanel="True" 
+                                                       RelativePanel.AlignLeftWithPanel="True"  Margin="60"/>
+            <local:UIPlayer x:Name="uiPlayer4" Tag="4" RelativePanel.AlignBottomWithPanel="True" 
+                                                       RelativePanel.AlignRightWithPanel="True"  Margin="60"/>
         </RelativePanel>
     </Grid>
 </Page>

@@ -12,7 +12,7 @@
     <Grid>
         <Grid Height="150" Width="150">
             <Image x:Name="imgFitxaMapa" Source="/Assets/tiles/Null0.png" Margin="2"/>
-            <Image x:Name="imgNino" Height="30" Width="30"  Margin="2"/>
+            <Image x:Name="imgNino" Height="30" Width="30" Margin="5"/>
         </Grid>
         <Grid x:Name="grdColocada" Height="150" Width="150" Background="#33FF0000" Visibility="Collapsed"></Grid>
     </Grid>

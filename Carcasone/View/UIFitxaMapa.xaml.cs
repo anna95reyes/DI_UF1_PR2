@@ -49,11 +49,20 @@ namespace Carcasone.View
             imgFitxaMapa.Source = new BitmapImage(new Uri(LaFitxaMapa.Fitxa.ImagePath));
             if (LaFitxaMapa.ElNino != null)
             {
-                imgNino.Source = imatgeNino(LaFitxaMapa.ElNino.Player);
+                imgNino.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
                 colorcarAlNino(LaFitxaMapa.ElNino.Pos);
-            }
-            
+            }   
         }
+
+        public int Player
+        {
+            get { return (int)GetValue(PlayerProperty); }
+            set { SetValue(PlayerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Player.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PlayerProperty =
+            DependencyProperty.Register("Player", typeof(int), typeof(UIFitxaMapa), new PropertyMetadata(0));
 
 
 
@@ -83,28 +92,6 @@ namespace Carcasone.View
             {
                 grdColocada.Visibility = Visibility.Collapsed;
             }
-        }
-
-        private ImageSource imatgeNino(int player)
-        {
-            BitmapImage bmi = new BitmapImage();
-            if (player == 1)
-            {
-                bmi = new BitmapImage(new Uri("ms-appx:///Assets/meeple/blue_meeple.png"));
-            }
-            else if (player == 2)
-            {
-                bmi = new BitmapImage(new Uri("ms-appx:///Assets/meeple/red_meeple.png"));
-            }
-            else if (player == 3)
-            {
-                bmi = new BitmapImage(new Uri("ms-appx:///Assets/meeple/green_meeple.png"));
-            }
-            else if (player == 4)
-            {
-                bmi = new BitmapImage(new Uri("ms-appx:///Assets/meeple/yellow_meeple.png"));
-            }
-            return bmi;
         }
 
         private void colorcarAlNino(PosType pos)

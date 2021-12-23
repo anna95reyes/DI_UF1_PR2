@@ -140,6 +140,9 @@
     <Compile Include="View\UIFitxaMapa.xaml.cs">
       <DependentUpon>UIFitxaMapa.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UIPlayer.xaml.cs">
+      <DependentUpon>UIPlayer.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -313,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UIFitxaMapa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UIPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -459,7 +459,7 @@ namespace Carcasone.View
             canviEstat(Estat.VIEW);
         }
 
-        private async System.Threading.Tasks.Task missatgeAvisCanviIsStartingTile()
+        private async Task missatgeAvisCanviIsStartingTile()
         {
             ContentDialog dialog = new ContentDialog
             {
