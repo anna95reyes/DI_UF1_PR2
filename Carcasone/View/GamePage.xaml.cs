@@ -57,18 +57,18 @@ namespace Carcasone.View
         private void inicialitzarPartida()
         {
             rnd = new Random();
+            int playerQueJuga = generarRandom(1, 4);
             uiFitxaMapaStarting.LaFitxaMapa = FitxaMapa.fitxaMapaStarting();
             fitxesJugades.Add(FitxaMapa.fitxaMapaStarting());
-            jugarPartida();
+            jugarRonda(playerQueJuga);
         }
 
-        private void jugarPartida()
+        private void jugarRonda(int playerQueJuga)
         {
             int i = 0;
-            int playerQueJuga = generarRandom(1, 4);
-            jugadorComencaPartida(playerQueJuga);
-            btnRotateLeft.IsEnabled = false;
-            btnRotateRight.IsEnabled = false;
+            jugadorJugaRonda(playerQueJuga);
+
+            activarDesactivarRotacioFitxaMapa(false);
 
             if (fitxesJugades.Count < FitxaMapa.getFitxesMapa().Count)
             {
@@ -83,15 +83,19 @@ namespace Carcasone.View
                     uiNextFitxaMapa.LaFitxaMapa = FitxaMapa.getFitxesMapa()[i];
                     uiNextFitxaMapa.Player = playerQueJuga;
                 }
-                btnRotateLeft.IsEnabled = true;
-                btnRotateRight.IsEnabled = true;
-
+                activarDesactivarRotacioFitxaMapa(true);
             }
 
-            
+
         }
 
-        private void jugadorComencaPartida(int jugadorAComencar)
+        private void activarDesactivarRotacioFitxaMapa(bool activar)
+        {
+            btnRotateLeft.IsEnabled = activar;
+            btnRotateRight.IsEnabled = activar;
+        }
+
+        private void jugadorJugaRonda(int jugadorAComencar)
         {
             GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer1);
             GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer2);
@@ -126,6 +130,7 @@ namespace Carcasone.View
                 rvpGame.Visibility = menuGame.Visibility;
                 grdHelp.Visibility = Visibility.Collapsed;
                 grdPagina.Background = new SolidColorBrush(Colors.LightGreen);
+                activarDesactivarRotacioFitxaMapa(false);
             }
             else if (estat == Estat.HELP)
             {
@@ -208,6 +213,36 @@ namespace Carcasone.View
         {
             RadioButton rb = (RadioButton)sender;
             qtatPlayers = Int32.Parse((String)rb.Tag);
+        }
+
+        private void btnRotateLeft_Click(object sender, RoutedEventArgs e)
+        {
+            rotarFitxaMapa(-1);
+        }
+
+        private void btnRotateRight_Click(object sender, RoutedEventArgs e)
+        {
+            rotarFitxaMapa(1);
+        }
+
+        private void rotarFitxaMapa(int rotacio)
+        {
+            SideType[] sides = new SideType[4];
+
+            sides[0] = uiNextFitxaMapa.LaFitxaMapa.Sides[((0 - rotacio) % 4 == -1) ? 3 : (0 - rotacio) % 4];
+            sides[1] = uiNextFitxaMapa.LaFitxaMapa.Sides[((1 - rotacio) % 4 == -1) ? 3 : (1 - rotacio) % 4];
+            sides[2] = uiNextFitxaMapa.LaFitxaMapa.Sides[((2 - rotacio) % 4 == -1) ? 3 : (2 - rotacio) % 4];
+            sides[3] = uiNextFitxaMapa.LaFitxaMapa.Sides[((3 - rotacio) % 4 == -1) ? 3 : (3 - rotacio) % 4];
+            uiNextFitxaMapa.LaFitxaMapa.Sides = sides;
+
+            rotacio = rotacio * 90;
+            uiNextFitxaMapa.Rotacio = uiNextFitxaMapa.LaFitxaMapa.Rotacio + rotacio;
+
+            
+            //COMPROBAR A ON ES POT COLOCAR
+
+
+            
         }
     }
 }

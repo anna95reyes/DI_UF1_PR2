@@ -55,7 +55,17 @@ namespace Carcasone.Model
 
         public Fitxa Fitxa { get => fitxa; set => fitxa = value; }
         public Point PosMapa { get => posMapa; set => posMapa = value; }
-        public int Rotacio { get => rotacio; set => rotacio = value; }
+        public int Rotacio
+        {
+            get
+            {
+                return rotacio;
+            }
+            set
+            {
+                rotacio = value;
+            }
+        }
         public SideType[] Sides { get => sides; set => sides = value; }
         public Nino ElNino { get => elNino; set => elNino = value; }
 

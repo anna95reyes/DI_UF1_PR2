@@ -26,8 +26,6 @@ namespace Carcasone.View
             this.InitializeComponent();
         }
 
-
-
         public FitxaMapa LaFitxaMapa
         {
             get { return (FitxaMapa)GetValue(LaFitxaMapaProperty); }
@@ -51,7 +49,7 @@ namespace Carcasone.View
             {
                 imgNino.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
                 colorcarAlNino(LaFitxaMapa.ElNino.Pos);
-            }   
+            }
         }
 
         public int Player
@@ -70,6 +68,38 @@ namespace Carcasone.View
         {
             get { return (bool)GetValue(ColocadaProperty); }
             set { SetValue(ColocadaProperty, value); }
+        }
+
+
+
+        public int Rotacio
+        {
+            get { return (int)GetValue(RotacioProperty); }
+            set { SetValue(RotacioProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Rotacio.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RotacioProperty =
+            DependencyProperty.Register("Rotacio", typeof(int), typeof(UIFitxaMapa), new PropertyMetadata(0, RotacioChangedCallback_static));
+
+        private static void RotacioChangedCallback_static(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UIFitxaMapa ufm = (UIFitxaMapa)d;
+            ufm.RotacioChangedCallback(d, e);
+        }
+
+        private void RotacioChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RotateTransform rt = new RotateTransform();
+            if (Rotacio != 0)
+            {
+                Rotacio = Rotacio % 360;
+            }
+            LaFitxaMapa.Rotacio = Rotacio;
+            rt.Angle = LaFitxaMapa.Rotacio;
+            rt.CenterX = grdImgFitxaMapa.Height / 2;
+            rt.CenterY = grdImgFitxaMapa.Width / 2;
+            grdImgFitxaMapa.RenderTransform = rt;
         }
 
         // Using a DependencyProperty as the backing store for Colocada.  This enables animation, styling, binding, etc...

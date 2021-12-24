@@ -10,7 +10,7 @@
     d:DesignWidth="150">
 
     <Grid>
-        <Grid Height="150" Width="150">
+        <Grid x:Name="grdImgFitxaMapa" Height="150" Width="150">
             <Image x:Name="imgFitxaMapa" Source="/Assets/tiles/Null0.png" Margin="2"/>
             <Image x:Name="imgNino" Height="30" Width="30" Margin="5"/>
         </Grid>
