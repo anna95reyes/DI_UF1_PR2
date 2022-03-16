@@ -5,8 +5,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Drawing;
 
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,7 +27,12 @@ namespace Carcasone.View
         public String pageName = "Carcassone Game";
         public int qtatPlayers = 0;
         ObservableCollection<FitxaMapa> fitxesJugades = new ObservableCollection<FitxaMapa>();
+        ObservableCollection<FitxaMapa> fitxesLliures = new ObservableCollection<FitxaMapa>();
         private static Random rnd;
+        private int playerQueJuga = -1;
+        private const int COLUM_ROW = 10;
+
+
 
         public enum Estat
         {
@@ -57,16 +61,40 @@ namespace Carcasone.View
         private void inicialitzarPartida()
         {
             rnd = new Random();
-            int playerQueJuga = generarRandom(1, 4);
+            playerQueJuga = generarRandom(1, 4);
+
+            for (int i = 0; i < COLUM_ROW; i++)
+            {
+                ColumnDefinition colum = new ColumnDefinition();
+                RowDefinition row = new RowDefinition();
+
+                grdUis.ColumnDefinitions.Add(colum);
+                grdUis.RowDefinitions.Add(row);
+            }
+
+            Grid.SetColumn(uiFitxaMapaStarting, COLUM_ROW / 2);
+            Grid.SetRow(uiFitxaMapaStarting, COLUM_ROW / 2);
+
             uiFitxaMapaStarting.LaFitxaMapa = FitxaMapa.fitxaMapaStarting();
+            for (int i = 0; i < FitxaMapa.getFitxesMapa().Count; i++)
+            {
+                fitxesLliures.Add(FitxaMapa.getFitxesMapa()[i]);
+            }
             fitxesJugades.Add(FitxaMapa.fitxaMapaStarting());
-            jugarRonda(playerQueJuga);
+            fitxesLliures.Remove(FitxaMapa.fitxaMapaStarting());
+
+            
+            
+
+            uiNextFitxaMapa.PerColocar = null;
+            uiFitxaMapaStarting.PerColocar = null;
+            jugarRonda();
         }
 
-        private void jugarRonda(int playerQueJuga)
+        private void jugarRonda()
         {
             int i = 0;
-            jugadorJugaRonda(playerQueJuga);
+            jugadorJugaRonda();
 
             activarDesactivarRotacioFitxaMapa(false);
 
@@ -84,6 +112,7 @@ namespace Carcasone.View
                     uiNextFitxaMapa.Player = playerQueJuga;
                 }
                 activarDesactivarRotacioFitxaMapa(true);
+                OnEsPotColocarLaFitxa(uiNextFitxaMapa.LaFitxaMapa);
             }
 
 
@@ -95,17 +124,17 @@ namespace Carcasone.View
             btnRotateRight.IsEnabled = activar;
         }
 
-        private void jugadorJugaRonda(int jugadorAComencar)
+        private void jugadorJugaRonda()
         {
-            GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer1);
-            GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer2);
-            GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer3);
-            GestionarUIPlayerQueComenca(jugadorAComencar, uiPlayer4);
+            GestionarUIPlayerQueComenca(uiPlayer1);
+            GestionarUIPlayerQueComenca(uiPlayer2);
+            GestionarUIPlayerQueComenca(uiPlayer3);
+            GestionarUIPlayerQueComenca(uiPlayer4);
         }
 
-        private void GestionarUIPlayerQueComenca(int jugadorAComencar, UIPlayer uip)
+        private void GestionarUIPlayerQueComenca(UIPlayer uip)
         {
-            if (Int32.Parse((String)uip.Tag) == jugadorAComencar)
+            if (Int32.Parse((String)uip.Tag) == playerQueJuga)
             {
                 uip.PlayerActual = true;
             }
@@ -238,11 +267,62 @@ namespace Carcasone.View
             rotacio = rotacio * 90;
             uiNextFitxaMapa.Rotacio = uiNextFitxaMapa.LaFitxaMapa.Rotacio + rotacio;
 
-            
+
             //COMPROBAR A ON ES POT COLOCAR
-
+            OnEsPotColocarLaFitxa(uiNextFitxaMapa.LaFitxaMapa);
 
             
+        }
+
+        private void OnEsPotColocarLaFitxa(FitxaMapa uiNextFitxaMapa)
+        {
+            uiNextFitxaMapa.ElNino = new Nino((PosType)(-1), playerQueJuga);
+            FitxaMapa fitxaMapa = new FitxaMapa(uiNextFitxaMapa);
+            fitxaMapa = uiNextFitxaMapa;
+
+            for (int i = 0; i < fitxesJugades.Count; i++)
+            {
+                for (int j = 0; j < fitxesJugades[i].PosOcupada.Length; j++)
+                {
+                    if (fitxesJugades[i].PosMapa.X < 0 || fitxesJugades[i].PosMapa.X > COLUM_ROW ||
+                        fitxesJugades[i].PosMapa.X < 0 || fitxesJugades[i].PosMapa.X > COLUM_ROW)
+                    {
+                        return;
+                    }
+
+                    if (fitxesJugades[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
+                    {
+                        int k = (j + 2) % 4;
+
+                        if (fitxesJugades[i].Sides[j] == fitxaMapa.Sides[k])
+                        {
+                            UIFitxaMapa ui = new UIFitxaMapa();
+                            PosibleColocacioUiFitxa(fitxaMapa, ui, i, j);
+                            grdUis.Children.Add(ui);
+                            Grid.SetColumn(ui, ui.LaFitxaMapa.PosMapa.Y);
+                            Grid.SetRow(ui, ui.LaFitxaMapa.PosMapa.X);
+                        }
+                    }
+                }
+            }
+        }
+               
+
+        private void PosibleColocacioUiFitxa(FitxaMapa fitxaMapa, UIFitxaMapa ui, int i, int j)
+        {
+            int x = 0;
+            int y = 0;
+
+            if (j == 0) y = -1;
+            if (j == 1) x = 1;
+            if (j == 2) y = 1;
+            if (j == 3) x = -1;
+
+            fitxaMapa.PosMapa = new Point(fitxesJugades[i].PosMapa.X + x, fitxesJugades[i].PosMapa.Y + y);
+            ui.LaFitxaMapa = fitxaMapa;
+            ui.PerColocar = true;
+            ui.Rotacio = fitxaMapa.Rotacio;
+            ui.Player = playerQueJuga;
         }
     }
 }

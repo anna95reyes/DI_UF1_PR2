@@ -1,6 +1,7 @@
 ﻿using Carcasone.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -47,8 +48,29 @@ namespace Carcasone.View
             imgFitxaMapa.Source = new BitmapImage(new Uri(LaFitxaMapa.Fitxa.ImagePath));
             if (LaFitxaMapa.ElNino != null)
             {
-                imgNino.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
-                colorcarAlNino(LaFitxaMapa.ElNino.Pos);
+                imgNinoTop.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+                imgNinoRight.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+                imgNinoLeft.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+                imgNinoBottom.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+
+                
+
+                if (PerColocar == false)
+                {
+                    btnNinoTop.Visibility = Visibility.Visible;
+                    btnNinoRight.Visibility = Visibility.Visible;
+                    btnNinoLeft.Visibility = Visibility.Visible;
+                    btnNinoBottom.Visibility = Visibility.Visible;
+                    colorcarAlNino(LaFitxaMapa.ElNino.Pos);
+                } 
+                else
+                {
+                    btnNinoTop.Visibility = Visibility.Collapsed;
+                    btnNinoRight.Visibility = Visibility.Collapsed;
+                    btnNinoLeft.Visibility = Visibility.Collapsed;
+                    btnNinoBottom.Visibility = Visibility.Collapsed;
+                }
+                
             }
         }
 
@@ -64,9 +86,9 @@ namespace Carcasone.View
 
 
 
-        public bool PerColocar
+        public Boolean? PerColocar
         {
-            get { return (bool)GetValue(ColocadaProperty); }
+            get { return (Boolean)GetValue(ColocadaProperty); }
             set { SetValue(ColocadaProperty, value); }
         }
 
@@ -114,7 +136,7 @@ namespace Carcasone.View
 
         private void ColocadaChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (PerColocar)
+            if (PerColocar == true || PerColocar != null)
             {
                 grdColocada.Visibility = Visibility.Visible;
             } 
@@ -126,27 +148,46 @@ namespace Carcasone.View
 
         private void colorcarAlNino(PosType pos)
         {
-            switch (pos)
-            {
-                case PosType.TOP:
-                    imgNino.VerticalAlignment = VerticalAlignment.Top;
-                    imgNino.HorizontalAlignment = HorizontalAlignment.Center;
-                    break;
-                case PosType.RIGHT:
-                    imgNino.VerticalAlignment = VerticalAlignment.Center;
-                    imgNino.HorizontalAlignment = HorizontalAlignment.Right;
-                    break;
-                case PosType.BOTTOM:
-                    imgNino.VerticalAlignment = VerticalAlignment.Bottom;
-                    imgNino.HorizontalAlignment = HorizontalAlignment.Center;
-                    break;
-                case PosType.LEFT:
-                    imgNino.VerticalAlignment = VerticalAlignment.Center;
-                    imgNino.HorizontalAlignment = HorizontalAlignment.Left;
-                    break;
-                default:
-                    break;
+            btnNinoTop.Visibility = Visibility.Collapsed;
+            btnNinoRight.Visibility = Visibility.Collapsed;
+            btnNinoLeft.Visibility = Visibility.Collapsed;
+            btnNinoBottom.Visibility = Visibility.Collapsed;
+            if (pos == PosType.TOP) {
+                btnNinoTop.Visibility = Visibility.Visible;
+            } 
+            else if (pos == PosType.RIGHT) {
+                    btnNinoRight.Visibility = Visibility.Visible;
+            } 
+            else if (pos == PosType.BOTTOM) {
+                    btnNinoLeft.Visibility = Visibility.Visible;
+            } 
+            else if (pos == PosType.LEFT) {
+                    btnNinoBottom.Visibility = Visibility.Visible;
             }
+        }
+
+        private void btnNino_Click(object sender, RoutedEventArgs e)
+        {
+            PosType posClicada = (PosType)(-1);
+            if (((Button)sender).Name.Equals("btnNinoTop"))
+            {
+                posClicada = PosType.TOP;
+            }
+            else if (((Button)sender).Name.Equals("btnNinoRight"))
+            {
+                posClicada = PosType.RIGHT;
+            }
+            else if (((Button)sender).Name.Equals("btnNinoLeft"))
+            {
+                posClicada = PosType.LEFT;
+            }
+            else if (((Button)sender).Name.Equals("btnNinoBottom"))
+            {
+                posClicada = PosType.BOTTOM;
+            }
+            LaFitxaMapa.ElNino.Pos = posClicada;
+
+            Debug.WriteLine("EL NINO: " + ((Button)sender).Name);
         }
     }
 }

@@ -72,11 +72,11 @@
                           IsVerticalScrollChainingEnabled="False" IsHorizontalScrollChainingEnabled="False"
                           HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                           RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
-                <RelativePanel>
+                <Grid x:Name="grdUis">
                     <local:UIFitxaMapa x:Name="uiFitxaMapaStarting"
                                        RelativePanel.AlignHorizontalCenterWithPanel="True"
                                        RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                </RelativePanel>
+                </Grid>
             </ScrollViewer>
             <Grid RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True">
                 <Grid.ColumnDefinitions>

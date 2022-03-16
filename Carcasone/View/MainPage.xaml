@@ -10,7 +10,7 @@
     Loaded="Page_Loaded">
 
     <Grid>
-        <NavigationView ItemInvoked="NavigationView_ItemInvoked" PaneDisplayMode="LeftCompact" IsPaneOpen="false">
+        <NavigationView ItemInvoked="NavigationView_ItemInvoked" PaneDisplayMode="LeftCompact" IsPaneOpen="False">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Name="nviCardEditor" Content="Card Edit">
                     <NavigationViewItem.Icon>

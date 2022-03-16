@@ -12,7 +12,21 @@
     <Grid>
         <Grid x:Name="grdImgFitxaMapa" Height="150" Width="150">
             <Image x:Name="imgFitxaMapa" Source="/Assets/tiles/Null0.png" Margin="2"/>
-            <Image x:Name="imgNino" Height="30" Width="30" Margin="5"/>
+
+            <Button x:Name="btnNinoTop" Height="30" Width="30" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="2" Padding="0" Click="btnNino_Click">
+                <Image x:Name="imgNinoTop" Height="28" Width="28"/>
+            </Button>
+            <Button x:Name="btnNinoRight" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2" Padding="0" Click="btnNino_Click">
+                <Image x:Name="imgNinoRight" Height="28" Width="28"/>
+            </Button>
+            <Button x:Name="btnNinoBottom" Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="2" Padding="0" Click="btnNino_Click">
+                <Image x:Name="imgNinoBottom" Height="28" Width="28"/>
+            </Button>
+            <Button x:Name="btnNinoLeft" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="2" Padding="0" Click="btnNino_Click">
+                <Image x:Name="imgNinoLeft" Height="28" Width="28"/>
+
+            </Button>
+
         </Grid>
         <Grid x:Name="grdColocada" Height="150" Width="150" Background="#33FF0000" Visibility="Collapsed"></Grid>
     </Grid>

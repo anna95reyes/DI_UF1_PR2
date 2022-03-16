@@ -18,7 +18,6 @@ namespace Carcasone.Model
         private Fitxa fitxa;
         private Point posMapa;
 
-
         /// <summary>
         /// 4 valors possibles:
         /// 0: sense rotar
@@ -28,6 +27,7 @@ namespace Carcasone.Model
         /// </summary>
         private int rotacio = 0;
         private SideType[] sides;
+        private PosFitxaMapaType[] posOcupada;
 
         /// <summary>
         /// Si la fitxa conté un nino llavors
@@ -36,22 +36,35 @@ namespace Carcasone.Model
 
         private Nino elNino;
 
-        public FitxaMapa(Fitxa fitxa, Point posMapa, int rotacio, SideType[] sides)
+        public FitxaMapa(Fitxa fitxa, Point posMapa, int rotacio, SideType[] sides, PosFitxaMapaType[] posOcupada)
         {
             Fitxa = fitxa;
             PosMapa = posMapa;
             Rotacio = rotacio;
             Sides = sides;
+            PosOcupada = posOcupada;
         }
 
-        public FitxaMapa(Fitxa fitxa, Point posMapa, int rotacio, SideType[] sides, Nino elNino)
+        public FitxaMapa(Fitxa fitxa, Point posMapa, int rotacio, SideType[] sides, PosFitxaMapaType[] posOcupada, Nino elNino)
         {
             Fitxa = fitxa;
             PosMapa = posMapa;
             Rotacio = rotacio;
             Sides = sides;
+            PosOcupada = posOcupada;
             ElNino = elNino;
         }
+
+        public FitxaMapa(FitxaMapa f)
+        {
+            Fitxa = f.Fitxa;
+            PosMapa = f.PosMapa;
+            Rotacio = f.Rotacio;
+            Sides = f.Sides;
+            PosOcupada = f.PosOcupada;
+            ElNino = f.ElNino;
+        }
+
 
         public Fitxa Fitxa { get => fitxa; set => fitxa = value; }
         public Point PosMapa { get => posMapa; set => posMapa = value; }
@@ -68,6 +81,7 @@ namespace Carcasone.Model
         }
         public SideType[] Sides { get => sides; set => sides = value; }
         public Nino ElNino { get => elNino; set => elNino = value; }
+        public PosFitxaMapaType[] PosOcupada { get => posOcupada; set => posOcupada = value; }
 
         public static ObservableCollection<FitxaMapa> getFitxesMapa()
         {
@@ -79,7 +93,7 @@ namespace Carcasone.Model
                 {
                     for (int j = 0; j < Fitxa.getFitxes()[i].Repeticions; j++)
                     {
-                        FitxaMapa fm = new FitxaMapa(Fitxa.getFitxes()[i], new Point(0, 0), 0, Fitxa.getFitxes()[i].Sides);
+                        FitxaMapa fm = new FitxaMapa(Fitxa.getFitxes()[i], new Point(5, 5), 0, Fitxa.getFitxes()[i].Sides, new PosFitxaMapaType[]{ PosFitxaMapaType.POS_LLIURE, PosFitxaMapaType.POS_LLIURE, PosFitxaMapaType.POS_LLIURE, PosFitxaMapaType.POS_LLIURE });
                         _fitxesMapa.Add(fm);
                     }
                     
