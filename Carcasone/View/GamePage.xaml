@@ -95,9 +95,8 @@
                     <Button x:Name="btnRotateLeft" Grid.Column="0" HorizontalAlignment="Right" Click="btnRotateLeft_Click">
                         <Image Source="/Assets/icons/icons8-rotate-60.png" Height="40"/>
                     </Button>
-                    <local:UIFitxaMapa x:Name="uiNextFitxaMapa" Grid.Column="1"
-                                    RelativePanel.AlignHorizontalCenterWithPanel="True"
-                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                    <local:UIFitxaMapa x:Name="uiNextFitxaMapa" Grid.Column="1" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
                     <Button x:Name="btnRotateRight" Grid.Column="2" Click="btnRotateRight_Click">
                         <Image Source="/Assets/icons/icons8-reboot-60.png" Height="40"/>
                     </Button>

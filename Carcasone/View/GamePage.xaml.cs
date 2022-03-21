@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Drawing;
+using System.Diagnostics;
 
 // La plantilla de elemento Página en blanco está documentada en https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +27,8 @@ namespace Carcasone.View
     {
         public String pageName = "Carcassone Game";
         public int qtatPlayers = 0;
-        ObservableCollection<FitxaMapa> fitxesJugades = new ObservableCollection<FitxaMapa>();
+        ObservableCollection<FitxaMapa> fitxesTauler = new ObservableCollection<FitxaMapa>();
+        ObservableCollection<FitxaMapa> fitxesPerJugar = new ObservableCollection<FitxaMapa>();
         ObservableCollection<FitxaMapa> fitxesLliures = new ObservableCollection<FitxaMapa>();
         private static Random rnd;
         private int playerQueJuga = -1;
@@ -80,12 +82,11 @@ namespace Carcasone.View
             {
                 fitxesLliures.Add(FitxaMapa.getFitxesMapa()[i]);
             }
-            fitxesJugades.Add(FitxaMapa.fitxaMapaStarting());
+            fitxesTauler.Add(FitxaMapa.fitxaMapaStarting());
+            fitxesPerJugar.Add(FitxaMapa.fitxaMapaStarting());
             fitxesLliures.Remove(FitxaMapa.fitxaMapaStarting());
 
             
-            
-
             uiNextFitxaMapa.PerColocar = null;
             uiFitxaMapaStarting.PerColocar = null;
             jugarRonda();
@@ -93,20 +94,21 @@ namespace Carcasone.View
 
         private void jugarRonda()
         {
+            //while (fitxesLliures.Count > 0)
             int i = 0;
             jugadorJugaRonda();
 
             activarDesactivarRotacioFitxaMapa(false);
 
-            if (fitxesJugades.Count < FitxaMapa.getFitxesMapa().Count)
+            if (fitxesTauler.Count < FitxaMapa.getFitxesMapa().Count)
             {
                 //busco la seguent fitxa a colocar
-                while (i < FitxaMapa.getFitxesMapa().Count && fitxesJugades.Contains(FitxaMapa.getFitxesMapa()[i]))
+                while (i < FitxaMapa.getFitxesMapa().Count && fitxesTauler.Contains(FitxaMapa.getFitxesMapa()[i]))
                 {
                     i++;
                 }
 
-                if (!fitxesJugades.Contains(FitxaMapa.getFitxesMapa()[i]))
+                if (!fitxesTauler.Contains(FitxaMapa.getFitxesMapa()[i]))
                 {
                     uiNextFitxaMapa.LaFitxaMapa = FitxaMapa.getFitxesMapa()[i];
                     uiNextFitxaMapa.Player = playerQueJuga;
@@ -247,6 +249,7 @@ namespace Carcasone.View
         private void btnRotateLeft_Click(object sender, RoutedEventArgs e)
         {
             rotarFitxaMapa(-1);
+            grdUis.DataContext = fitxesPerJugar;
         }
 
         private void btnRotateRight_Click(object sender, RoutedEventArgs e)
@@ -280,27 +283,32 @@ namespace Carcasone.View
             FitxaMapa fitxaMapa = new FitxaMapa(uiNextFitxaMapa);
             fitxaMapa = uiNextFitxaMapa;
 
-            for (int i = 0; i < fitxesJugades.Count; i++)
+            for (int i = 0; i < fitxesTauler.Count; i++)
             {
-                for (int j = 0; j < fitxesJugades[i].PosOcupada.Length; j++)
+                for (int j = 0; j < fitxesTauler[i].PosOcupada.Length; j++)
                 {
-                    if (fitxesJugades[i].PosMapa.X < 0 || fitxesJugades[i].PosMapa.X > COLUM_ROW ||
-                        fitxesJugades[i].PosMapa.X < 0 || fitxesJugades[i].PosMapa.X > COLUM_ROW)
+                    if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
+                        fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW)
                     {
                         return;
                     }
 
-                    if (fitxesJugades[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
+                    if (fitxesTauler[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
                     {
                         int k = (j + 2) % 4;
 
-                        if (fitxesJugades[i].Sides[j] == fitxaMapa.Sides[k])
+                        if (fitxesTauler[i].Sides[j] == fitxaMapa.Sides[k])
                         {
                             UIFitxaMapa ui = new UIFitxaMapa();
                             PosibleColocacioUiFitxa(fitxaMapa, ui, i, j);
+                            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
+                            for (int f = 0; f < fitxesTauler.Count; f++)
+                                fitxesPerJugar.Add(fitxesTauler[f]);
                             grdUis.Children.Add(ui);
+                            fitxesPerJugar.Add(((UIFitxaMapa)ui).LaFitxaMapa);
                             Grid.SetColumn(ui, ui.LaFitxaMapa.PosMapa.Y);
                             Grid.SetRow(ui, ui.LaFitxaMapa.PosMapa.X);
+                            ui.Click += UIFitxaMapa_Click;
                         }
                     }
                 }
@@ -318,11 +326,19 @@ namespace Carcasone.View
             if (j == 2) y = 1;
             if (j == 3) x = -1;
 
-            fitxaMapa.PosMapa = new Point(fitxesJugades[i].PosMapa.X + x, fitxesJugades[i].PosMapa.Y + y);
+            fitxaMapa.PosMapa = new Point(fitxesTauler[i].PosMapa.X + x, fitxesTauler[i].PosMapa.Y + y);
             ui.LaFitxaMapa = fitxaMapa;
             ui.PerColocar = true;
             ui.Rotacio = fitxaMapa.Rotacio;
             ui.Player = playerQueJuga;
+        }
+
+        private void UIFitxaMapa_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("ENTRO!!");
+            Debug.WriteLine(((UIFitxaMapa)sender).LaFitxaMapa.PosMapa);
+            fitxesTauler.Add(((UIFitxaMapa)sender).LaFitxaMapa);
+            fitxesPerJugar.Add(((UIFitxaMapa)sender).LaFitxaMapa);
         }
     }
 }

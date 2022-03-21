@@ -27,6 +27,8 @@ namespace Carcasone.View
             this.InitializeComponent();
         }
 
+        public event EventHandler Click;
+
         public FitxaMapa LaFitxaMapa
         {
             get { return (FitxaMapa)GetValue(LaFitxaMapaProperty); }
@@ -45,33 +47,39 @@ namespace Carcasone.View
 
         private void LaFitxaMapaChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            imgFitxaMapa.Source = new BitmapImage(new Uri(LaFitxaMapa.Fitxa.ImagePath));
-            if (LaFitxaMapa.ElNino != null)
+            if (LaFitxaMapa != null)
             {
-                imgNinoTop.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
-                imgNinoRight.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
-                imgNinoLeft.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
-                imgNinoBottom.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+                imgFitxaMapa.Source = new BitmapImage(new Uri(LaFitxaMapa.Fitxa.ImagePath));
 
-                
+                btnNinoTop.Visibility = Visibility.Collapsed;
+                btnNinoRight.Visibility = Visibility.Collapsed;
+                btnNinoLeft.Visibility = Visibility.Collapsed;
+                btnNinoBottom.Visibility = Visibility.Collapsed;
 
                 if (PerColocar == false)
                 {
-                    btnNinoTop.Visibility = Visibility.Visible;
-                    btnNinoRight.Visibility = Visibility.Visible;
-                    btnNinoLeft.Visibility = Visibility.Visible;
-                    btnNinoBottom.Visibility = Visibility.Visible;
-                    colorcarAlNino(LaFitxaMapa.ElNino.Pos);
-                } 
+                    btnUI.IsEnabled = false;
+                    grdColocada.Visibility = Visibility.Collapsed;
+                    if (LaFitxaMapa.ElNino != null)
+                    {
+                        imgNino.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
+                    }
+                }
+                else if (PerColocar == true)
+                {
+                    btnUI.IsEnabled = true;
+                    grdColocada.Visibility = Visibility.Visible;
+                    imgNino.Source = null;
+                    
+                }
                 else
                 {
-                    btnNinoTop.Visibility = Visibility.Collapsed;
-                    btnNinoRight.Visibility = Visibility.Collapsed;
-                    btnNinoLeft.Visibility = Visibility.Collapsed;
-                    btnNinoBottom.Visibility = Visibility.Collapsed;
+                    btnUI.IsEnabled = false;
+                    grdColocada.Visibility = Visibility.Collapsed;
+                    imgNino.Source = null;
                 }
-                
             }
+                
         }
 
         public int Player
@@ -86,11 +94,17 @@ namespace Carcasone.View
 
 
 
+
         public Boolean? PerColocar
         {
-            get { return (Boolean)GetValue(ColocadaProperty); }
-            set { SetValue(ColocadaProperty, value); }
+            get { return (Boolean?)GetValue(PerColocarProperty); }
+            set { SetValue(PerColocarProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for PerColocar.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PerColocarProperty =
+            DependencyProperty.Register("PerColocar", typeof(Boolean?), typeof(UIFitxaMapa), new PropertyMetadata(true, LaFitxaMapaChangedCallback_static));
+
 
 
 
@@ -124,28 +138,6 @@ namespace Carcasone.View
             grdImgFitxaMapa.RenderTransform = rt;
         }
 
-        // Using a DependencyProperty as the backing store for Colocada.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColocadaProperty =
-            DependencyProperty.Register("Colocada", typeof(bool), typeof(UIFitxaMapa), new PropertyMetadata(false, ColocadaChangedCallback_static));
-
-        private static void ColocadaChangedCallback_static(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            UIFitxaMapa ufm = (UIFitxaMapa)d;
-            ufm.ColocadaChangedCallback(d,e);
-        }
-
-        private void ColocadaChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (PerColocar == true || PerColocar != null)
-            {
-                grdColocada.Visibility = Visibility.Visible;
-            } 
-            else
-            {
-                grdColocada.Visibility = Visibility.Collapsed;
-            }
-        }
-
         private void colorcarAlNino(PosType pos)
         {
             btnNinoTop.Visibility = Visibility.Collapsed;
@@ -153,21 +145,27 @@ namespace Carcasone.View
             btnNinoLeft.Visibility = Visibility.Collapsed;
             btnNinoBottom.Visibility = Visibility.Collapsed;
             if (pos == PosType.TOP) {
-                btnNinoTop.Visibility = Visibility.Visible;
+                imgNino.VerticalAlignment = VerticalAlignment.Top;
+                imgNino.HorizontalAlignment = HorizontalAlignment.Center;
             } 
             else if (pos == PosType.RIGHT) {
-                    btnNinoRight.Visibility = Visibility.Visible;
+                imgNino.VerticalAlignment = VerticalAlignment.Center;
+                imgNino.HorizontalAlignment = HorizontalAlignment.Right;
             } 
             else if (pos == PosType.BOTTOM) {
-                    btnNinoLeft.Visibility = Visibility.Visible;
+                imgNino.VerticalAlignment = VerticalAlignment.Bottom;
+                imgNino.HorizontalAlignment = HorizontalAlignment.Center;
             } 
             else if (pos == PosType.LEFT) {
-                    btnNinoBottom.Visibility = Visibility.Visible;
+                imgNino.VerticalAlignment = VerticalAlignment.Center;
+                imgNino.HorizontalAlignment = HorizontalAlignment.Left;
             }
         }
 
         private void btnNino_Click(object sender, RoutedEventArgs e)
         {
+            btnUI.IsEnabled = false;
+            imgNino.Source = new BitmapImage(new Uri(LaFitxaMapa.ElNino.ImagePath));
             PosType posClicada = (PosType)(-1);
             if (((Button)sender).Name.Equals("btnNinoTop"))
             {
@@ -185,9 +183,27 @@ namespace Carcasone.View
             {
                 posClicada = PosType.BOTTOM;
             }
-            LaFitxaMapa.ElNino.Pos = posClicada;
-
-            Debug.WriteLine("EL NINO: " + ((Button)sender).Name);
+            
+            if (LaFitxaMapa.ElNino != null)
+            {
+                LaFitxaMapa.ElNino.Pos = posClicada;
+                colorcarAlNino(LaFitxaMapa.ElNino.Pos);
+            }
         }
+
+        private void btnUI_Click(object sender, RoutedEventArgs e)
+        {
+            imgNino.Source = null;
+            grdColocada.Visibility = Visibility.Collapsed;
+            btnNinoTop.Visibility = Visibility.Visible;
+            btnNinoRight.Visibility = Visibility.Visible;
+            btnNinoLeft.Visibility = Visibility.Visible;
+            btnNinoBottom.Visibility = Visibility.Visible;
+            Click?.Invoke(this, new EventArgs());
+        }
+
+
     }
+
+
 }
