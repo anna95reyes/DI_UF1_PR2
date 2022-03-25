@@ -28,7 +28,7 @@ namespace Carcasone.View
         public String pageName = "Carcassone Game";
         public int qtatPlayers = 0;
         ObservableCollection<FitxaMapa> fitxesTauler = new ObservableCollection<FitxaMapa>();
-        ObservableCollection<FitxaMapa> fitxesPerJugar = new ObservableCollection<FitxaMapa>();
+        ObservableCollection<FitxaMapa> fitxesPerJugar;
         ObservableCollection<FitxaMapa> fitxesLliures = new ObservableCollection<FitxaMapa>();
         private static Random rnd;
         private int playerQueJuga = -1;
@@ -83,10 +83,9 @@ namespace Carcasone.View
                 fitxesLliures.Add(FitxaMapa.getFitxesMapa()[i]);
             }
             fitxesTauler.Add(FitxaMapa.fitxaMapaStarting());
-            fitxesPerJugar.Add(FitxaMapa.fitxaMapaStarting());
             fitxesLliures.Remove(FitxaMapa.fitxaMapaStarting());
 
-            
+
             uiNextFitxaMapa.PerColocar = null;
             uiFitxaMapaStarting.PerColocar = null;
             jugarRonda();
@@ -235,7 +234,7 @@ namespace Carcasone.View
             inicialitzarPartida();
         }
 
-        private void btnOK_Click(object sender, RoutedEventArgs e)
+        private void btnOkRules_Click(object sender, RoutedEventArgs e)
         {
             canviEstat(Estat.GAME);
         }
@@ -249,7 +248,6 @@ namespace Carcasone.View
         private void btnRotateLeft_Click(object sender, RoutedEventArgs e)
         {
             rotarFitxaMapa(-1);
-            grdUis.DataContext = fitxesPerJugar;
         }
 
         private void btnRotateRight_Click(object sender, RoutedEventArgs e)
@@ -274,7 +272,6 @@ namespace Carcasone.View
             //COMPROBAR A ON ES POT COLOCAR
             OnEsPotColocarLaFitxa(uiNextFitxaMapa.LaFitxaMapa);
 
-            
         }
 
         private void OnEsPotColocarLaFitxa(FitxaMapa uiNextFitxaMapa)
@@ -283,16 +280,23 @@ namespace Carcasone.View
             FitxaMapa fitxaMapa = new FitxaMapa(uiNextFitxaMapa);
             fitxaMapa = uiNextFitxaMapa;
 
+            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
+
+            for (int f = 0; f < fitxesTauler.Count; f++)
+                fitxesPerJugar.Add(fitxesTauler[f]);
+
+            
+
             for (int i = 0; i < fitxesTauler.Count; i++)
             {
                 for (int j = 0; j < fitxesTauler[i].PosOcupada.Length; j++)
                 {
-                    if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
+                   /* if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
                         fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW)
                     {
-                        return;
+                        break; //TODO: mirar nomes per un costat
                     }
-
+                    */
                     if (fitxesTauler[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
                     {
                         int k = (j + 2) % 4;
@@ -301,13 +305,11 @@ namespace Carcasone.View
                         {
                             UIFitxaMapa ui = new UIFitxaMapa();
                             PosibleColocacioUiFitxa(fitxaMapa, ui, i, j);
-                            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
-                            for (int f = 0; f < fitxesTauler.Count; f++)
-                                fitxesPerJugar.Add(fitxesTauler[f]);
+                            
                             grdUis.Children.Add(ui);
                             fitxesPerJugar.Add(((UIFitxaMapa)ui).LaFitxaMapa);
-                            Grid.SetColumn(ui, ui.LaFitxaMapa.PosMapa.Y);
-                            Grid.SetRow(ui, ui.LaFitxaMapa.PosMapa.X);
+                            Grid.SetColumn(ui, ui.LaFitxaMapa.PosMapa.X);
+                            Grid.SetRow(ui, ui.LaFitxaMapa.PosMapa.Y);
                             ui.Click += UIFitxaMapa_Click;
                         }
                     }
@@ -335,10 +337,28 @@ namespace Carcasone.View
 
         private void UIFitxaMapa_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("ENTRO!!");
             Debug.WriteLine(((UIFitxaMapa)sender).LaFitxaMapa.PosMapa);
+
             fitxesTauler.Add(((UIFitxaMapa)sender).LaFitxaMapa);
-            fitxesPerJugar.Add(((UIFitxaMapa)sender).LaFitxaMapa);
+
+            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
+            for (int f = 0; f < fitxesTauler.Count; f++)
+                fitxesPerJugar.Add(fitxesTauler[f]);
+
+            btnCancel.Visibility = Visibility.Visible;
+            btnOk.Visibility = Visibility.Visible;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            btnCancel.Visibility = Visibility.Collapsed;
+            btnOk.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            btnCancel.Visibility = Visibility.Collapsed;
+            btnOk.Visibility = Visibility.Collapsed;
         }
     }
 }
