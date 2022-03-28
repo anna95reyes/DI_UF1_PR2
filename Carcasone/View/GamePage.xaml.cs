@@ -28,8 +28,9 @@ namespace Carcasone.View
         public String pageName = "Carcassone Game";
         public int qtatPlayers = 0;
         ObservableCollection<FitxaMapa> fitxesTauler = new ObservableCollection<FitxaMapa>();
-        ObservableCollection<FitxaMapa> fitxesPerJugar;
         ObservableCollection<FitxaMapa> fitxesLliures = new ObservableCollection<FitxaMapa>();
+        ObservableCollection<UIFitxaMapa> uiFitxesColocades = null;
+        UIFitxaMapa fitxaClicada;
         private static Random rnd;
         private int playerQueJuga = -1;
         private const int COLUM_ROW = 10;
@@ -247,11 +248,13 @@ namespace Carcasone.View
 
         private void btnRotateLeft_Click(object sender, RoutedEventArgs e)
         {
+            NetejarGridUISFitxaMapa();
             rotarFitxaMapa(-1);
         }
 
         private void btnRotateRight_Click(object sender, RoutedEventArgs e)
         {
+            NetejarGridUISFitxaMapa();
             rotarFitxaMapa(1);
         }
 
@@ -271,7 +274,7 @@ namespace Carcasone.View
 
             //COMPROBAR A ON ES POT COLOCAR
             OnEsPotColocarLaFitxa(uiNextFitxaMapa.LaFitxaMapa);
-
+            
         }
 
         private void OnEsPotColocarLaFitxa(FitxaMapa uiNextFitxaMapa)
@@ -280,23 +283,21 @@ namespace Carcasone.View
             FitxaMapa fitxaMapa = new FitxaMapa(uiNextFitxaMapa);
             fitxaMapa = uiNextFitxaMapa;
 
-            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
-
-            for (int f = 0; f < fitxesTauler.Count; f++)
-                fitxesPerJugar.Add(fitxesTauler[f]);
-
-            
+            uiFitxesColocades = new ObservableCollection<UIFitxaMapa>();
+            uiFitxesColocades.Add(uiFitxaMapaStarting);
+            NetejarGridUISFitxaMapa();
 
             for (int i = 0; i < fitxesTauler.Count; i++)
             {
                 for (int j = 0; j < fitxesTauler[i].PosOcupada.Length; j++)
                 {
-                   /* if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
-                        fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW)
-                    {
-                        break; //TODO: mirar nomes per un costat
-                    }
-                    */
+                    /* if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
+                         fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW)
+                     {
+                         break; //TODO: mirar nomes per un costat
+                     }
+                     */
+
                     if (fitxesTauler[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
                     {
                         int k = (j + 2) % 4;
@@ -305,9 +306,7 @@ namespace Carcasone.View
                         {
                             UIFitxaMapa ui = new UIFitxaMapa();
                             PosibleColocacioUiFitxa(fitxaMapa, ui, i, j);
-                            
                             grdUis.Children.Add(ui);
-                            fitxesPerJugar.Add(((UIFitxaMapa)ui).LaFitxaMapa);
                             Grid.SetColumn(ui, ui.LaFitxaMapa.PosMapa.X);
                             Grid.SetRow(ui, ui.LaFitxaMapa.PosMapa.Y);
                             ui.Click += UIFitxaMapa_Click;
@@ -339,11 +338,7 @@ namespace Carcasone.View
         {
             Debug.WriteLine(((UIFitxaMapa)sender).LaFitxaMapa.PosMapa);
 
-            fitxesTauler.Add(((UIFitxaMapa)sender).LaFitxaMapa);
-
-            fitxesPerJugar = new ObservableCollection<FitxaMapa>();
-            for (int f = 0; f < fitxesTauler.Count; f++)
-                fitxesPerJugar.Add(fitxesTauler[f]);
+            fitxaClicada = (UIFitxaMapa)sender;
 
             btnCancel.Visibility = Visibility.Visible;
             btnOk.Visibility = Visibility.Visible;
@@ -351,14 +346,33 @@ namespace Carcasone.View
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            NetejarGridUISFitxaMapa();
+
             btnCancel.Visibility = Visibility.Collapsed;
             btnOk.Visibility = Visibility.Collapsed;
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
+            fitxesTauler.Add(fitxaClicada.LaFitxaMapa);
+            uiFitxesColocades.Add(fitxaClicada);
+            NetejarGridUISFitxaMapa();
+
             btnCancel.Visibility = Visibility.Collapsed;
             btnOk.Visibility = Visibility.Collapsed;
+        }
+
+        private void NetejarGridUISFitxaMapa()
+        {
+            if (uiFitxesColocades != null) { 
+                for (int i = 0; i < grdUis.Children.Count; i++)
+                {
+                    if (!uiFitxesColocades.Contains(grdUis.Children[i]))
+                    {
+                        grdUis.Children.RemoveAt(i);
+                    }
+                }
+            }
         }
     }
 }
