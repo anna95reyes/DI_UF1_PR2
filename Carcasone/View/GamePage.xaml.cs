@@ -282,9 +282,10 @@ namespace Carcasone.View
             uiNextFitxaMapa.ElNino = new Nino((PosType)(-1), playerQueJuga);
             FitxaMapa fitxaMapa = new FitxaMapa(uiNextFitxaMapa);
             fitxaMapa = uiNextFitxaMapa;
-
+            
             uiFitxesColocades = new ObservableCollection<UIFitxaMapa>();
             uiFitxesColocades.Add(uiFitxaMapaStarting);
+
             NetejarGridUISFitxaMapa();
 
             for (int i = 0; i < fitxesTauler.Count; i++)
@@ -334,11 +335,18 @@ namespace Carcasone.View
             ui.Player = playerQueJuga;
         }
 
+        private void activarDesactivarRotacio(Boolean actiu)
+        {
+            btnRotateLeft.IsEnabled = actiu;
+            btnRotateRight.IsEnabled = actiu;
+        }
+
         private void UIFitxaMapa_Click(object sender, EventArgs e)
         {
             Debug.WriteLine(((UIFitxaMapa)sender).LaFitxaMapa.PosMapa);
 
             fitxaClicada = (UIFitxaMapa)sender;
+            activarDesactivarRotacio(false);
 
             btnCancel.Visibility = Visibility.Visible;
             btnOk.Visibility = Visibility.Visible;
@@ -347,6 +355,8 @@ namespace Carcasone.View
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             NetejarGridUISFitxaMapa();
+
+            activarDesactivarRotacio(true);
 
             btnCancel.Visibility = Visibility.Collapsed;
             btnOk.Visibility = Visibility.Collapsed;
@@ -364,12 +374,17 @@ namespace Carcasone.View
 
         private void NetejarGridUISFitxaMapa()
         {
-            if (uiFitxesColocades != null) { 
-                for (int i = 0; i < grdUis.Children.Count; i++)
+            if (uiFitxesColocades != null) {
+                int i = 0;
+                while (i < grdUis.Children.Count)
                 {
                     if (!uiFitxesColocades.Contains(grdUis.Children[i]))
                     {
                         grdUis.Children.RemoveAt(i);
+                    }
+                    else
+                    { 
+                        i++; 
                     }
                 }
             }
