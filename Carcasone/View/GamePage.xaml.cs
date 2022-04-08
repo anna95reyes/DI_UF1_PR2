@@ -95,11 +95,17 @@ namespace Carcasone.View
         private void jugarRonda()
         {
             //while (fitxesLliures.Count > 0)
-            int i = 0;
+
             jugadorJugaRonda();
 
             activarDesactivarRotacioFitxaMapa(false);
+            seguentFitxaAColocar();
 
+        }
+
+        private void seguentFitxaAColocar()
+        {
+            int i = 0;
             if (fitxesTauler.Count < FitxaMapa.getFitxesMapa().Count)
             {
                 //busco la seguent fitxa a colocar
@@ -116,8 +122,6 @@ namespace Carcasone.View
                 activarDesactivarRotacioFitxaMapa(true);
                 OnEsPotColocarLaFitxa(uiNextFitxaMapa.LaFitxaMapa);
             }
-
-
         }
 
         private void activarDesactivarRotacioFitxaMapa(bool activar)
@@ -292,12 +296,11 @@ namespace Carcasone.View
             {
                 for (int j = 0; j < fitxesTauler[i].PosOcupada.Length; j++)
                 {
-                    /* if (fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW ||
-                         fitxesTauler[i].PosMapa.X < 0 || fitxesTauler[i].PosMapa.X > COLUM_ROW)
-                     {
-                         break; //TODO: mirar nomes per un costat
-                     }
-                     */
+
+                    if (fitxesTauler[i].PosMapa.X == 0 && j == 3) break;
+                    if (fitxesTauler[i].PosMapa.X == COLUM_ROW && j == 1) break;
+                    if (fitxesTauler[i].PosMapa.Y == 0 && j == 0) break;
+                    if (fitxesTauler[i].PosMapa.Y == COLUM_ROW && j == 2) break;
 
                     if (fitxesTauler[i].PosOcupada[j] == PosFitxaMapaType.POS_LLIURE)
                     {
@@ -370,6 +373,8 @@ namespace Carcasone.View
 
             btnCancel.Visibility = Visibility.Collapsed;
             btnOk.Visibility = Visibility.Collapsed;
+
+            seguentFitxaAColocar();
         }
 
         private void NetejarGridUISFitxaMapa()
